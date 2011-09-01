@@ -3,7 +3,7 @@
 Plugin Name: Status
 Plugin URI: http://premium.wpmudev.org/
 Description: Quickly post your status
-Version: 1.0
+Version: 1.1
 Author: Ve Bailovity (Incsub)
 Author URI: http://premium.wpmudev.org
 WDP ID: 242
@@ -73,6 +73,9 @@ require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_installer.php';
 Wdqs_Installer::check();
 
 require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_options.php';
+
+require_once (WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_widget_status.php');
+add_action('widgets_init', create_function('', "register_widget('Wdqs_WidgetStatus');"));
 
 if (is_admin()) {
 	require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_admin_form_renderer.php';

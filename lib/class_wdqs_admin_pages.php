@@ -5,7 +5,7 @@
 class Wdqs_AdminPages {
 
 	//var $data;
-	var $_link_type = 'link';
+	var $_link_type = 'status';
 	var $_link_title = '';
 
 	function Wdqs_AdminPages () { $this->__construct(); }
@@ -74,6 +74,10 @@ class Wdqs_AdminPages {
 		add_settings_field('wdqs_public', __('Show on public pages', 'wdqs'), array($form, 'create_show_on_public_pages_box'), 'wdqs_options_page', 'wdqs_settings');
 		add_settings_field('wdqs_front', __('Show on front page only', 'wdqs'), array($form, 'create_show_on_front_page_box'), 'wdqs_options_page', 'wdqs_settings');
 		add_settings_field('wdqs_back', __('Show on Dashboard', 'wdqs'), array($form, 'create_show_on_dashboard_box'), 'wdqs_options_page', 'wdqs_settings');
+
+		add_settings_section('wdqs_post', __('Status post settings', 'wdqs'), create_function('', ''), 'wdqs_options_page');
+		add_settings_field('wdqs_title', __('Default title', 'wdqs'), array($form, 'create_title_box'), 'wdqs_options_page', 'wdqs_post');
+		add_settings_field('wdqs_format', __('Post format', 'wdqs'), array($form, 'create_post_format_box'), 'wdqs_options_page', 'wdqs_post');
 	}
 
 	function create_admin_menu_entry () {
@@ -164,6 +168,8 @@ class Wdqs_AdminPages {
 
 		if (!$str) return $link;
 
+		$this->_link_type = 'link';
+
 		if (!$image) {
 			$images = array();
 			$image_els = $html->find('img');
@@ -188,7 +194,7 @@ class Wdqs_AdminPages {
 			$title = $html->find('title', 0);
 			$title = $og_title ? $og_title->content : $title->plaintext;
 		} else $title = $link_title;
-		$this->_link_title = $title ? $title : sprintf(__('My quick %s post', 'wdqs'), $this->_link_type);
+		$this->_link_title = $title ? $title : $this->_get_default_title();
 
 		if (!$link_text) {
 			$p = $html->find('p', 0);
@@ -239,6 +245,12 @@ class Wdqs_AdminPages {
 		return $preview;
 	}
 
+	private function _get_default_title () {
+		$title = $this->data->get('default_title');
+		$title = $title ? $title : __('My quick %s post', 'wdqs');
+		return sprintf($title, $this->_link_type);
+	}
+
 	function create_post ($data) {
 		if (!current_user_can('publish_posts')) return false;
 		global $user_ID;
@@ -251,7 +263,7 @@ class Wdqs_AdminPages {
 			'link_text' => @$data['link_text'],
 		);
 		$text = $this->generate_preview_html($data['data'], $send, true);
-		$title = @$data['title'] ? $data['title'] : sprintf(__('My quick %s post', 'wdqs'), $this->_link_type);
+		$title = @$data['title'] ? $data['title'] : $this->_get_default_title();
 		$post = array (
 			'post_title' => $title,
 			'post_content' => $text,
@@ -259,8 +271,15 @@ class Wdqs_AdminPages {
 			'post_status' => 'publish',
 			'post_author' => $user_ID,
 		);
+
+		$format = $this->data->get('post_format-' . $this->_link_type);
+
 		$post_id = wp_insert_post($post);
+
 		if ($post_id) {
+			set_post_format($post_id, $format);
+			update_post_meta($post_id, 'wdqs_type', $this->_link_type);
+			update_post_meta($post_id, 'wdqs_posted', time());
 			$post = get_post($post_id);
 			// Make sure we trigger this hook, as that's what UFb uses
 			do_action('post_updated', $post_id, $post, $post);
@@ -276,7 +295,7 @@ class Wdqs_AdminPages {
 		);
 		$preview = $this->generate_preview_html(@$_POST['text'], $data);
 		$title = (isset($_POST['title']) && $_POST['title']) ? $_POST['title'] : $this->_link_title;
-		$title = $title ? $title : sprintf(__('My quick %s post', 'wdqs'), $this->_link_type);
+		$title = $title ? $title : $this->_get_default_title();
 
 		$status = strlen($preview);
 		header('Content-type: application/json');
