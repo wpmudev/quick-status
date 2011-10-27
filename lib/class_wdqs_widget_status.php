@@ -116,6 +116,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$args = array(
 			'posts_per_page' => $count,
 			'meta_key' => 'wdqs_type',
+			'post_status' => 'publish',
 			'orderby' => 'date',
 		);
 		if ($type) {

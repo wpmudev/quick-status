@@ -12,7 +12,7 @@
 	clear: both;
 	margin-bottom: .5em;
 }
-#wdqs-post {
+#wdqs-post, #wdqs-draft {
 	float: right;
 }
 p.wdqs-link-to-source {

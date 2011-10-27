@@ -19,11 +19,14 @@ function publishPostData (e) {
 	var link_title = $(".wdqs-title-container h3 a").text();
 	var link_text = $(".wdqs-text-container p").html();
 	
+	var is_draft = $(e.target).is("#wdqs-draft") ? 1 : 0;
+	
 	var $root = $("#wdqs-dashboard-widget").parent();
 	$root.html('<div class="wdqs-waiting-for-response"></div>');
 	
 	$.post(_wdqs_ajaxurl, {
 		"action": "wdqs_post",
+		"is_draft": is_draft,
 		"data": text,
 		"title": title,
 		"height": height,
@@ -324,7 +327,7 @@ $("#wdqs-status").live('paste', handlePasteEvent);
 /*** Control handlers ***/
 $("#wdqs-preview").live('click', handlePreviewRequest);
 $("#wdqs-reset").live('click', resetData);
-$("#wdqs-post").live('click', publishPostData);
+$("#wdqs-post, #wdqs-draft").live('click', publishPostData);
 
 /*** Tabs handlers ***/
 $(".wdqs-type-switch").live('click', function () {switchContentType($(this), true); return false;});

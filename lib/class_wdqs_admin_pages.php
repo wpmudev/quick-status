@@ -72,12 +72,12 @@ class Wdqs_AdminPages {
 		register_setting('wdqs', 'wdqs');
 		add_settings_section('wdqs_settings', __('Status settings', 'wdqs'), create_function('', ''), 'wdqs_options_page');
 		add_settings_field('wdqs_public', __('Show on public pages', 'wdqs'), array($form, 'create_show_on_public_pages_box'), 'wdqs_options_page', 'wdqs_settings');
-		add_settings_field('wdqs_front', __('Show on front page only', 'wdqs'), array($form, 'create_show_on_front_page_box'), 'wdqs_options_page', 'wdqs_settings');
 		add_settings_field('wdqs_back', __('Show on Dashboard', 'wdqs'), array($form, 'create_show_on_dashboard_box'), 'wdqs_options_page', 'wdqs_settings');
 
 		add_settings_section('wdqs_post', __('Status post settings', 'wdqs'), create_function('', ''), 'wdqs_options_page');
 		add_settings_field('wdqs_title', __('Default title', 'wdqs'), array($form, 'create_title_box'), 'wdqs_options_page', 'wdqs_post');
 		add_settings_field('wdqs_format', __('Post format', 'wdqs'), array($form, 'create_post_format_box'), 'wdqs_options_page', 'wdqs_post');
+		add_settings_field('wdqs_category', __('Post categories', 'wdqs'), array($form, 'create_post_category_box'), 'wdqs_options_page', 'wdqs_post');
 	}
 
 	function create_admin_menu_entry () {
@@ -264,12 +264,14 @@ class Wdqs_AdminPages {
 		);
 		$text = $this->generate_preview_html($data['data'], $send, true);
 		$title = @$data['title'] ? $data['title'] : $this->_get_default_title();
+		$category = $this->data->get('post_category-' . $this->_link_type);
 		$post = array (
 			'post_title' => $title,
 			'post_content' => $text,
 			'post_date' => current_time('mysql'),
-			'post_status' => 'publish',
+			'post_status' => @$_POST['is_draft'] ? 'draft' : 'publish',
 			'post_author' => $user_ID,
+			'post_category' => array($category),
 		);
 
 		$format = $this->data->get('post_format-' . $this->_link_type);
@@ -281,8 +283,13 @@ class Wdqs_AdminPages {
 			update_post_meta($post_id, 'wdqs_type', $this->_link_type);
 			update_post_meta($post_id, 'wdqs_posted', time());
 			$post = get_post($post_id);
+
+			// Prepare old post for UFb triggering
+			// Walkaround for 1.3 UFb fix
+			$old_post = clone $post;
+			$old_post->post_status = 'draft';
 			// Make sure we trigger this hook, as that's what UFb uses
-			do_action('post_updated', $post_id, $post, $post);
+			do_action('post_updated', $post_id, $post, $old_post);
 		}
 
 		return $post_id;

@@ -22,6 +22,7 @@
 			<input type="button" class="button" id="wdqs-preview" value="<?php _e("Preview", 'wdqs');?>" />
 			<input type="button" class="button" id="wdqs-reset" value="<?php _e("Forget it", 'wdqs');?>" />
 			<input type="button" class="button-primary" id="wdqs-post" value="<?php _e("Post", 'wdqs');?>" />
+			<input type="button" class="button" id="wdqs-draft" value="<?php _e("Draft", 'wdqs');?>" />
 		</p>
 	</div>
 	<input type="hidden" id="wdqs-link-type" value="" />

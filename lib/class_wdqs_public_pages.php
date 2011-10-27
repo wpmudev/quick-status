@@ -58,9 +58,11 @@ class Wdqs_PublicPages {
 
 	function status_widget () {
 		if (!$this->_check_permissions()) return false;
+		if (defined('WDQS_BOX_CREATED')) return false; // Already added
 		echo "<div>";
 		include(WDQS_PLUGIN_BASE_DIR . '/lib/forms/dashboard_widget.php');
 		echo "</div>";
+		define ('WDQS_BOX_CREATED', true);
 	}
 
 	private function _check_permissions () {
@@ -68,7 +70,10 @@ class Wdqs_PublicPages {
 		if (!current_user_can('publish_posts')) return false;
 		if (!$current_user->ID) return false;
 
-		if ($this->data->get('show_on_front_page') && !is_front_page()) return false;
+		$placement = $this->data->get('placement');
+		$placement = $placement ? $placement : 'front_page';
+
+		if ('front_page' == $placement && !is_front_page()) return false;
 
 		return true;
 	}
@@ -80,6 +85,27 @@ class Wdqs_PublicPages {
 		add_action('wp_print_scripts', array($this, 'js_load_scripts'));
 		add_action('wp_print_styles', array($this, 'css_load_styles'));
 
-		add_action('loop_start', array($this, 'status_widget'), 100);
+		$placement = $this->data->get('placement');
+		$placement = $placement ? $placement : 'front_page';
+
+		if ('manual' != $placement) {
+			$hook = $this->data->get('use_hook');
+			$hook = $hook ? $hook : 'loop_start';
+			add_action($hook, array($this, 'status_widget'), 100);
+		}
 	}
+}
+
+/**
+ * Manual placement function.
+ * This can be used in theme files, e.g. like this:
+ *
+ * <code>
+ *	if (function_exists('wdqs_quick_status')) wdqs_quick_status();
+ * </code>
+ */
+function wdqs_quick_status () {
+	$status = new Wdqs_PublicPages;
+	$placement = $status->data->get('placement');
+	if ('manual' == $placement) $status->status_widget();
 }
