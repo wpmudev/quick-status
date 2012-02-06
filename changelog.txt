@@ -1,0 +1,33 @@
+Plugin Name: Status
+Author: Ve Bailovity (Incsub)
+
+Change Log:
+----------------------------------------------------------------------
+----------------------------------------------------------------------
+
+1.3.1 - 2012-02-06
+----------------------------------------------------------------------
+- Improved public area check.
+- Fix for adding remote images through media library.
+
+1.3 - 2011-10-27
+----------------------------------------------------------------------
+- Fix for multiple inclusions.
+- Added new options for public pages placement.
+- Added automatic categories option.
+
+1.2 - 2011-10-18
+----------------------------------------------------------------------
+- Fix for Ultimate Facebook integration.
+- Fix for widget to respect post status.
+- Fix for l10n.
+- Added "Draft" option.
+
+1.1 - 2011-09-01
+----------------------------------------------------------------------
+- Added post formats support.
+- Added last status posts widget.
+
+1.0 - 2011-08-31
+----------------------------------------------------------------------
+- Initial release.

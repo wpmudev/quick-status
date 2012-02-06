@@ -259,7 +259,12 @@ function changeTextContent () {
 }
 
 function imageToEditor (html) {
-	var $img = $('img', html);
+	var $html = $(html);
+	var $img = false;
+	if ($html.is("img")) $img = $html;
+	else $img = $html.find("img");
+	if (!$img || !$img.length) return false;
+	//var $img = $('img', html);
 	mediaToEditor($img.attr('src'));
 	setPreviewTitle($img.attr('title'));
 	callPreviewUpdate();
@@ -365,7 +370,7 @@ $("#wdqs-next").live('click', function () {
 
 /*** Initialize ***/
 function init () {
-	if (typeof window.send_to_editor != 'function') {
+	if (typeof window.send_to_editor != 'function' || typeof _wdqs_adminurl != 'undefined') {
 		_isPublicPage = true;
 		// Neutralize wpautop
 		$("#wdqs-dashboard-widget p").each(function () {
