@@ -21,7 +21,11 @@
 		<p id="wdqs-controls">
 			<input type="button" class="button" id="wdqs-preview" value="<?php _e("Preview", 'wdqs');?>" />
 			<input type="button" class="button" id="wdqs-reset" value="<?php _e("Forget it", 'wdqs');?>" />
-			<input type="button" class="button-primary" id="wdqs-post" value="<?php _e("Post", 'wdqs');?>" />
+			<input type="button" class="button-primary" id="wdqs-post" value="<?php current_user_can("publish_posts") 
+				? _e("Post", 'wdqs')
+				: _e("Submit for Review", "wdqs")
+			;
+			?>" />
 			<input type="button" class="button" id="wdqs-draft" value="<?php _e("Draft", 'wdqs');?>" />
 		</p>
 	</div>

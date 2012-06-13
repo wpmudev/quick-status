@@ -73,6 +73,10 @@ class Wdqs_AdminFormRenderer {
 	function create_show_on_dashboard_box () {
 		echo $this->_create_checkbox('show_on_dashboard');
 	}
+	function create_contributors_box () {
+		echo $this->_create_checkbox('contributors');
+		echo '<div><small>' . __('Selecting this option will allow your Contributors to use Status prompt to submit their updates for review.', 'wdqs') . '</small></div>';
+	}
 
 	function create_title_box () {
 		$opts = $this->_get_option();

@@ -37,8 +37,15 @@ class Wdqs_AdminPages {
 		return $response['body'];
 	}
 
+	private function _check_permissions () {
+		if ($this->data->get("contributors")) {
+			return current_user_can("edit_posts");
+		}
+		return current_user_can("publish_posts");
+	}
+
 	function js_load_scripts () {
-		if (!current_user_can('publish_posts')) return false;
+		if (!$this->_check_permissions()) return false;
 		if (!$this->data->get('show_on_dashboard')) return false;
 		if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) return false;
 		wp_enqueue_script('jquery');
@@ -73,6 +80,7 @@ class Wdqs_AdminPages {
 		add_settings_section('wdqs_settings', __('Status settings', 'wdqs'), create_function('', ''), 'wdqs_options_page');
 		add_settings_field('wdqs_public', __('Show on public pages', 'wdqs'), array($form, 'create_show_on_public_pages_box'), 'wdqs_options_page', 'wdqs_settings');
 		add_settings_field('wdqs_back', __('Show on Dashboard', 'wdqs'), array($form, 'create_show_on_dashboard_box'), 'wdqs_options_page', 'wdqs_settings');
+		add_settings_field('wdqs_contributors', __('Allow submitting for review', 'wdqs'), array($form, 'create_contributors_box'), 'wdqs_options_page', 'wdqs_settings');
 
 		add_settings_section('wdqs_post', __('Status post settings', 'wdqs'), create_function('', ''), 'wdqs_options_page');
 		add_settings_field('wdqs_title', __('Default title', 'wdqs'), array($form, 'create_title_box'), 'wdqs_options_page', 'wdqs_post');
@@ -81,7 +89,7 @@ class Wdqs_AdminPages {
 	}
 
 	function create_admin_menu_entry () {
-	if (@$_POST && isset($_POST['option_page'])) {
+		if (@$_POST && isset($_POST['option_page'])) {
 			$changed = false;
 			$update = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'update_site_option' : 'update_option';
 			if('wdqs' == @$_POST['option_page']) {
@@ -110,7 +118,8 @@ class Wdqs_AdminPages {
 
 	function add_status_dashboard_widget () {
 		// We can alternatively use "edit_posts"
-		if (!current_user_can('publish_posts')) return false;
+		//if (!current_user_can('publish_posts')) return false;
+		if (!$this->_check_permissions()) return false;
 		if ($this->data->get('show_on_dashboard')) {
 			wp_add_dashboard_widget('wdqs_dashboard_status_widget', __("Status", 'wdqs'), array($this, 'status_dashboard_widget'));
 		}
@@ -252,7 +261,8 @@ class Wdqs_AdminPages {
 	}
 
 	function create_post ($data) {
-		if (!current_user_can('publish_posts')) return false;
+		//if (!current_user_can('publish_posts')) return false;
+		if (!$this->_check_permissions()) return false;
 		global $user_ID;
 		$send = array(
 			'image' => $data['thumbnail'],
@@ -269,7 +279,7 @@ class Wdqs_AdminPages {
 			'post_title' => $title,
 			'post_content' => $text,
 			'post_date' => current_time('mysql'),
-			'post_status' => @$_POST['is_draft'] ? 'draft' : 'publish',
+			'post_status' => @$_POST['is_draft'] ? 'draft' : (current_user_can("publish_posts") ? 'publish' : 'pending'),
 			'post_author' => $user_ID,
 			'post_category' => array($category),
 		);
