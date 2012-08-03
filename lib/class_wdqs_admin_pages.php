@@ -93,7 +93,7 @@ class Wdqs_AdminPages {
 			$changed = false;
 			$update = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'update_site_option' : 'update_option';
 			if('wdqs' == @$_POST['option_page']) {
-				$update('wdqs', $_POST['wdqs']);
+				$update('wdqs', stripslashes_deep($_POST['wdqs']));
 				$changed = true;
 			}
 

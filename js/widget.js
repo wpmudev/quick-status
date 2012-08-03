@@ -370,6 +370,7 @@ $("#wdqs-next").live('click', function () {
 
 /*** Initialize ***/
 function init () {
+	if (!$("#wdqs-dashboard-widget").length) return false;
 	if (typeof window.send_to_editor != 'function' || typeof _wdqs_adminurl != 'undefined') {
 		_isPublicPage = true;
 		// Neutralize wpautop
