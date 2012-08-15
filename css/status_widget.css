@@ -12,3 +12,10 @@
 .wdqs_widget_status_title {
 	font-weight: bold;
 }
+
+.wdqs_widget_status_root .wdqs-author_avatar.small,
+.wdqs_widget_status_root .wdqs-author_avatar.medium
+{
+	float: left;
+	padding: 3px;
+}

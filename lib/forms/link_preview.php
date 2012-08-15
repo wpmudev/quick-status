@@ -1,5 +1,5 @@
 <div class="wdqs wdqs_link wdqs-link-container">
-	<p class="wdqs-link-to-source"><a target="_blank" href="<?php echo $link; ?>"><?php echo $link;?></a></p>
+	<p class="wdqs-link-to-source"><a target="_blank" <?php echo $extra_link_attributes; ?> href="<?php echo $link; ?>"><?php echo $link;?></a></p>
 	<div class="wdqs-thumbnail-container">
 		<?php if (is_array($images)) { ?>
 		<ul class="wdqs-image-list">

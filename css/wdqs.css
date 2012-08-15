@@ -21,3 +21,18 @@ p.wdqs-link-to-source {
 .wdqs-thumbnail-container {
 	clear: both;
 }
+
+/* ----- Thixbox fix yay! ----- */
+
+#TB_overlay {
+    z-index: 99101 !important;
+}
+#TB_window {
+    z-index: 99102 !important;
+}
+#TB_load {
+    z-index: 99103 !important;
+}
+#TB_HideSelect {
+    z-index: 99100 !important;
+}

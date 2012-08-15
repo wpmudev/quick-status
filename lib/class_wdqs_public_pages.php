@@ -20,6 +20,10 @@ class Wdqs_PublicPages {
 	 */
 	function serve () {
 		$me = new Wdqs_PublicPages;
+		if ('widget' == $me->data->get('placement')) {
+			require_once (WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_widget_posting.php');
+			add_action('widgets_init', create_function('', "register_widget('Wdqs_WidgetPosting');"));
+		}
 		$me->add_hooks();
 	}
 
@@ -89,7 +93,7 @@ class Wdqs_PublicPages {
 		$placement = $this->data->get('placement');
 		$placement = $placement ? $placement : 'front_page';
 
-		if ('manual' != $placement) {
+		if (!in_array($placement, array('manual', 'widget'))) {
 			$hook = $this->data->get('use_hook');
 			$hook = $hook ? $hook : 'loop_start';
 			add_action($hook, array($this, 'status_widget'), 100);

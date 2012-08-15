@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Status\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-06-13 14:52+0100\n"
-"PO-Revision-Date: 2012-06-13 14:52+0100\n"
+"POT-Creation-Date: 2012-08-15 15:02+0100\n"
+"PO-Revision-Date: 2012-08-15 15:02+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
@@ -58,209 +58,258 @@ msgstr ""
 msgid "Example usage: <code>if (function_exists(\"wdqs_quick_status\")) wdqs_quick_status();</code>"
 msgstr ""
 
+#: lib/class_wdqs_admin_form_renderer.php:77
+msgid "I will be using it in a widget"
+msgstr ""
+
 #: lib/class_wdqs_admin_form_renderer.php:78
+msgid "If you select this option, a new widget named <b>Status Update</b> will be available to you under <em>Appearance &gt; Widgets</em>."
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:86
 msgid "Selecting this option will allow your Contributors to use Status prompt to submit their updates for review."
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:83
-#: lib/class_wdqs_admin_pages.php:259
+#: lib/class_wdqs_admin_form_renderer.php:91
+#: lib/class_wdqs_admin_pages.php:267
 #, php-format
 msgid "My quick %s post"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:85
+#: lib/class_wdqs_admin_form_renderer.php:93
 msgid "This is what will be used as fallback title for your Status posts by default"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:86
+#: lib/class_wdqs_admin_form_renderer.php:94
 #, php-format
 msgid "Use <code>%s</code> anywhere in your title to insert the post type (i.e. status, link, image, video)"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:94
+#: lib/class_wdqs_admin_form_renderer.php:102
 msgid "<p>Your theme does not support post formats</p>"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:99
+#: lib/class_wdqs_admin_form_renderer.php:107
 msgid "Link post format:"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:103
-#: lib/class_wdqs_admin_form_renderer.php:113
-#: lib/class_wdqs_admin_form_renderer.php:123
-#: lib/class_wdqs_admin_form_renderer.php:133
+#: lib/class_wdqs_admin_form_renderer.php:111
+#: lib/class_wdqs_admin_form_renderer.php:121
+#: lib/class_wdqs_admin_form_renderer.php:131
+#: lib/class_wdqs_admin_form_renderer.php:141
 msgid "Use default format"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:107
+#: lib/class_wdqs_admin_form_renderer.php:115
 msgid "This format will be applied to all your &quot;Link&quot; posts."
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:109
+#: lib/class_wdqs_admin_form_renderer.php:117
 msgid "Image post format:"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:117
+#: lib/class_wdqs_admin_form_renderer.php:125
 msgid "This format will be applied to all your &quot;Image&quot; posts."
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:119
+#: lib/class_wdqs_admin_form_renderer.php:127
 msgid "Video post format:"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:127
+#: lib/class_wdqs_admin_form_renderer.php:135
 msgid "This format will be applied to all your &quot;Video&quot; posts."
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:129
+#: lib/class_wdqs_admin_form_renderer.php:137
 msgid "Generic Status post format:"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:137
+#: lib/class_wdqs_admin_form_renderer.php:145
 msgid "This format will be applied to all your generic &quot;Status&quot; posts."
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:144
+#: lib/class_wdqs_admin_form_renderer.php:152
 msgid "Link category:"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:146
-#: lib/class_wdqs_admin_form_renderer.php:158
-#: lib/class_wdqs_admin_form_renderer.php:170
-#: lib/class_wdqs_admin_form_renderer.php:182
+#: lib/class_wdqs_admin_form_renderer.php:154
+#: lib/class_wdqs_admin_form_renderer.php:166
+#: lib/class_wdqs_admin_form_renderer.php:178
+#: lib/class_wdqs_admin_form_renderer.php:190
 msgid "No category"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:154
+#: lib/class_wdqs_admin_form_renderer.php:162
 msgid "This category will be automatically added to all your &quot;Link&quot; posts."
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:156
+#: lib/class_wdqs_admin_form_renderer.php:164
 msgid "Image category:"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:166
+#: lib/class_wdqs_admin_form_renderer.php:174
 msgid "This category will be automatically added to all your &quot;Image&quot; posts."
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:168
+#: lib/class_wdqs_admin_form_renderer.php:176
 msgid "Video category:"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:178
+#: lib/class_wdqs_admin_form_renderer.php:186
 msgid "This category will be automatically added to all your &quot;Video&quot; posts."
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:180
+#: lib/class_wdqs_admin_form_renderer.php:188
 msgid "Generic Status category:"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:190
+#: lib/class_wdqs_admin_form_renderer.php:198
 msgid "This category will be automatically added to all your generic &quot;Status&quot; posts."
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:56
-#: lib/class_wdqs_public_pages.php:35
-msgid "No thumbnail"
-msgstr ""
-
-#: lib/class_wdqs_admin_pages.php:57
-#: lib/class_wdqs_public_pages.php:36
-msgid "of"
-msgstr ""
-
-#: lib/class_wdqs_admin_pages.php:58
-#: lib/class_wdqs_public_pages.php:37
-msgid "images found"
-msgstr ""
-
-#: lib/class_wdqs_admin_pages.php:59
-#: lib/class_wdqs_public_pages.php:38
-msgid "Use default title"
+#: lib/class_wdqs_admin_form_renderer.php:202
+msgid "Add <code>rel=\"nofollow\"</code> to the external links?"
 msgstr ""
 
 #: lib/class_wdqs_admin_pages.php:60
 #: lib/class_wdqs_public_pages.php:39
-msgid "Use this title"
+msgid "No thumbnail"
 msgstr ""
 
 #: lib/class_wdqs_admin_pages.php:61
 #: lib/class_wdqs_public_pages.php:40
-msgid "Post title"
+msgid "of"
 msgstr ""
 
 #: lib/class_wdqs_admin_pages.php:62
 #: lib/class_wdqs_public_pages.php:41
-msgid "Height"
+msgid "images found"
 msgstr ""
 
 #: lib/class_wdqs_admin_pages.php:63
 #: lib/class_wdqs_public_pages.php:42
-msgid "Width"
+msgid "Use default title"
 msgstr ""
 
 #: lib/class_wdqs_admin_pages.php:64
 #: lib/class_wdqs_public_pages.php:43
+msgid "Use this title"
+msgstr ""
+
+#: lib/class_wdqs_admin_pages.php:65
+#: lib/class_wdqs_public_pages.php:44
+msgid "Post title"
+msgstr ""
+
+#: lib/class_wdqs_admin_pages.php:66
+#: lib/class_wdqs_public_pages.php:45
+msgid "Height"
+msgstr ""
+
+#: lib/class_wdqs_admin_pages.php:67
+#: lib/class_wdqs_public_pages.php:46
+msgid "Width"
+msgstr ""
+
+#: lib/class_wdqs_admin_pages.php:68
+#: lib/class_wdqs_public_pages.php:47
 msgid "Leave these boxes empty for defaults"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:80
+#: lib/class_wdqs_admin_pages.php:84
 #: lib/forms/plugin_settings.php:2
 msgid "Status settings"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:81
+#: lib/class_wdqs_admin_pages.php:85
 msgid "Show on public pages"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:82
+#: lib/class_wdqs_admin_pages.php:86
 msgid "Show on Dashboard"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:83
+#: lib/class_wdqs_admin_pages.php:87
 msgid "Allow submitting for review"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:85
+#: lib/class_wdqs_admin_pages.php:89
 msgid "Status post settings"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:86
+#: lib/class_wdqs_admin_pages.php:90
 msgid "Default title"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:87
+#: lib/class_wdqs_admin_pages.php:91
 msgid "Post format"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:88
+#: lib/class_wdqs_admin_pages.php:92
 msgid "Post categories"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:108
-#: lib/class_wdqs_admin_pages.php:124
-#: lib/forms/dashboard_widget.php:11
+#: lib/class_wdqs_admin_pages.php:93
+msgid "External links"
+msgstr ""
+
+#: lib/class_wdqs_admin_pages.php:113
+#: lib/class_wdqs_admin_pages.php:129
+#: lib/forms/dashboard_widget.php:12
 msgid "Status"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:8
-msgid "Shows one or more last Status posts"
+#: lib/class_wdqs_widget_posting.php:8
+msgid "Shows Status update form in a widget"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:25
+#: lib/class_wdqs_widget_posting.php:19
+#: lib/class_wdqs_widget_status.php:42
 msgid "Title:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:30
+#: lib/class_wdqs_widget_posting.php:25
+msgid "Please, switch your placement settings to <em>manual</em> in plugin settings"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:16
+msgid "Shows one or more last Status posts"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:24
+msgid "No avatars"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:25
+msgid "Small"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:26
+msgid "Medium"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:27
+msgid "Large"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:28
+msgid "Huge"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:47
 msgid "Show this many posts:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:39
+#: lib/class_wdqs_widget_status.php:56
 msgid "Auto-update rate <small>(seconds)</small>:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:41
+#: lib/class_wdqs_widget_status.php:58
 msgid "Never auto-update"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:66
+msgid "Show avatars:"
 msgstr ""
 
 #: lib/forms/dashboard_widget.php:4
@@ -268,35 +317,35 @@ msgstr ""
 msgid "Post updated. <a href=\"%s\">View post</a>"
 msgstr ""
 
-#: lib/forms/dashboard_widget.php:12
+#: lib/forms/dashboard_widget.php:13
 msgid "Video"
 msgstr ""
 
-#: lib/forms/dashboard_widget.php:13
+#: lib/forms/dashboard_widget.php:14
 msgid "Image"
 msgstr ""
 
-#: lib/forms/dashboard_widget.php:14
+#: lib/forms/dashboard_widget.php:15
 msgid "Link"
 msgstr ""
 
-#: lib/forms/dashboard_widget.php:22
+#: lib/forms/dashboard_widget.php:23
 msgid "Preview"
 msgstr ""
 
-#: lib/forms/dashboard_widget.php:23
+#: lib/forms/dashboard_widget.php:24
 msgid "Forget it"
 msgstr ""
 
-#: lib/forms/dashboard_widget.php:25
+#: lib/forms/dashboard_widget.php:26
 msgid "Post"
 msgstr ""
 
-#: lib/forms/dashboard_widget.php:26
+#: lib/forms/dashboard_widget.php:27
 msgid "Submit for Review"
 msgstr ""
 
-#: lib/forms/dashboard_widget.php:29
+#: lib/forms/dashboard_widget.php:30
 msgid "Draft"
 msgstr ""
 

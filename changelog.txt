@@ -5,6 +5,13 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.5 - 2012-08-15
+----------------------------------------------------------------------
+- Fix for Thickbox z-index issue.
+- Added avatars showing option to widget.
+- Added nofollow plugin options.
+- Added status update form widget and new placement option.
+
 1.4.1 - 2012-08-03
 ----------------------------------------------------------------------
 - Fix for javascript conflict with widget presence test.

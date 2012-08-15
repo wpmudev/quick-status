@@ -5,6 +5,7 @@
 		</div>
 	<?php } ?>
 	<div id="wdqs-form-root">
+		<?php do_action('wdqs-form-before_form'); ?>
 		<p>
 			<div id="wdqs-types-tabs">
 				<b>Post:</b>
@@ -28,7 +29,10 @@
 			?>" />
 			<input type="button" class="button" id="wdqs-draft" value="<?php _e("Draft", 'wdqs');?>" />
 		</p>
+		<?php do_action('wdqs-form-after_form'); ?>
 	</div>
 	<input type="hidden" id="wdqs-link-type" value="" />
+	<?php do_action('wdqs-form-before_preview'); ?>
 	<div id="wdqs-preview-root"></div>
+	<?php do_action('wdqs-form-after_preview'); ?>
 </div>

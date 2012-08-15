@@ -4,6 +4,14 @@
  */
 class Wdqs_WidgetStatus extends WP_Widget {
 
+	private $_avatar_sizes = array();
+	private $_avatar_size_map = array(
+		'small' => 32,
+		'medium' => 48,
+		'large' => 64,
+		'huge' => 96,
+	);
+
 	function Wdqs_WidgetStatus () {
 		$widget_ops = array('classname' => __CLASS__, 'description' => __('Shows one or more last Status posts', 'wdqs'));
 		parent::WP_Widget(__CLASS__, 'Status', $widget_ops);
@@ -11,12 +19,21 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		add_action('wp_ajax_wdqs_list_posts', array($this, 'json_wdqs_list_posts'));
 		add_action('wp_ajax_nopriv_wdqs_list_posts', array($this, 'json_wdqs_list_posts'));
 		wp_enqueue_script('jquery');
+
+		$this->_avatar_sizes = array(
+			0 => __('No avatars', 'wdqs'),
+			'small' => __('Small', 'wdqs'),
+			'medium' => __('Medium', 'wdqs'),
+			'large' => __('Large', 'wdqs'),
+			'huge' => __('Huge', 'wdqs'),
+		);
 	}
 
 	function form($instance) {
 		$title = esc_attr($instance['title']);
 		$count = esc_attr($instance['count']);
 		$autorefresh = esc_attr($instance['autorefresh']);
+		$avatars = esc_attr($instance['avatars']);
 
 		// Set defaults
 		// ...
@@ -45,6 +62,15 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$html .= '</select> ';
 		$html .= '</p>';
 
+		$html .= '<p>';
+		$html .= '<label for="' . $this->get_field_id('avatars') . '">' . __('Show avatars:', 'wdqs') . '</label>';
+		$html .= '<select name="' . $this->get_field_name('avatars') . '" id="' . $this->get_field_id('avatars') . '">';
+		foreach ($this->_avatar_sizes as $key => $val) {
+			$html .= '<option value="' . $key . '" ' . (($key == $avatars) ? 'selected="selected"' : '') . '>' . $val . '</option>';
+		}
+		$html .= '</select>';
+		$html .= '</p>';
+
 		echo $html;
 	}
 
@@ -53,6 +79,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$instance['title'] = strip_tags($new_instance['title']);
 		$instance['count'] = strip_tags($new_instance['count']);
 		$instance['autorefresh'] = strip_tags($new_instance['autorefresh']);
+		$instance['avatars'] = strip_tags($new_instance['avatars']);
 
 		return $instance;
 	}
@@ -63,6 +90,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$count = (int)$instance['count'];
 		$count = $count ? $count : 1;
 		$autorefresh = $instance['autorefresh'];
+		$this->_avatars = esc_attr($instance['avatars']);
 
 		echo $before_widget;
 		if ($title) echo $before_title . $title . $after_title;
@@ -104,17 +132,33 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$posts = $this->_get_status_posts($count, $type);
 		$out = '';
 		foreach ($posts as $post) {
-			$out .= '<li>';
-			$out .= '<div class="wdqs_widget_status_title">' . $post->post_title . '</div>';
-			$out .= '<div class="wdqs_widget_status_body">' . $post->post_content . '</div>';
-			$out .= '</li>';
+			$item = '<li>' .
+				$this->_get_avatar_markup($post) . 
+				'<div class="wdqs_widget_status_title">' . $post->post_title . '</div>' .
+				'<div class="wdqs_widget_status_body">' . $post->post_content . '</div>' .
+			'</li>';
+			$out .= $item;
 		}
 		return $out;
 	}
 
+	private function _get_avatar_markup ($post) {
+		if (!$this->_avatars) return false;
+		$key = $this->_avatars;
+		$map = apply_filters('wdqs-widget-avatars_size_map', $this->_avatar_size_map);
+		$size = in_array($key, array_keys($map)) ? $map[$key] : apply_filters('wdqs-widget-default_size_mapping', false);
+		if (!$size) return false; // Unknown mapping
+
+		$user = get_userdata($post->post_author);
+		$name = apply_filters('wdqs-widget-avatar_user_name', $user->display_name, $user);
+
+		$avatar = get_avatar($post->post_author, $size, null, $name);
+		return '<div class="wdqs-author_avatar ' . esc_attr($key) . '" title="' . esc_attr($name) . '">' . $avatar . '</div>';
+	}
+
 	private function _get_status_posts ($count=1, $type=false) {
 		$args = array(
-			'posts_per_page' => $count,
+			'posts_per_page' => (int)$count,
 			'meta_key' => 'wdqs_type',
 			'post_status' => 'publish',
 			'orderby' => 'date',

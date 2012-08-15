@@ -21,6 +21,10 @@ class Wdqs_AdminPages {
 	 */
 	function serve () {
 		$me = new Wdqs_AdminPages;
+		if ('widget' == $me->data->get('placement')) {
+			require_once (WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_widget_posting.php');
+			add_action('widgets_init', create_function('', "register_widget('Wdqs_WidgetPosting');"));
+		}
 		$me->add_hooks();
 	}
 
@@ -86,6 +90,7 @@ class Wdqs_AdminPages {
 		add_settings_field('wdqs_title', __('Default title', 'wdqs'), array($form, 'create_title_box'), 'wdqs_options_page', 'wdqs_post');
 		add_settings_field('wdqs_format', __('Post format', 'wdqs'), array($form, 'create_post_format_box'), 'wdqs_options_page', 'wdqs_post');
 		add_settings_field('wdqs_category', __('Post categories', 'wdqs'), array($form, 'create_post_category_box'), 'wdqs_options_page', 'wdqs_post');
+		add_settings_field('wdqs_external', __('External links', 'wdqs'), array($form, 'create_externals_box'), 'wdqs_options_page', 'wdqs_post');
 	}
 
 	function create_admin_menu_entry () {
@@ -212,6 +217,9 @@ class Wdqs_AdminPages {
 			$meta = $og_desc ? $og_desc : $meta_desc;
 			$text = $meta ? $meta->content : $p->plaintext;
 		} else $text = $link_text;
+
+		$rel = $this->data->get('external_nofollow') ? 'rel="nofollow"' : '';
+		$extra_link_attributes = apply_filters('wdqs-link-extra_attributes', "{$rel}");
 
 		ob_start();
 		include(WDQS_PLUGIN_BASE_DIR . '/lib/forms/link_preview.php');

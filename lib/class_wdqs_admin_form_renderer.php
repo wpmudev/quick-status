@@ -38,7 +38,7 @@ class Wdqs_AdminFormRenderer {
 		$checked = ('front_page' == $placement) ? 'checked="checked"' : '';
 		echo
 			'<div class="wdqs_public_options">' .
-			"<input type='radio' id='wdqs_placement-front_page' name='wdqs[placement]' value='front_page' {$checked} />" .
+			"<input type='radio' id='wdqs_placement-front_page' name='wdqs[placement]' value='front_page' {$checked} /> " .
 			'<label for="wdqs_placement-front_page">' . __('Show on front page only', 'wdqs') . '</label>' .
 			'<div><small>' . __('If you select this option, Status will be added to your front page only.', 'wdqs') . '</small></div>' .
 		'</div><br />';
@@ -46,7 +46,7 @@ class Wdqs_AdminFormRenderer {
 		$checked = ('all_pages' == $placement) ? 'checked="checked"' : '';
 		echo
 			'<div class="wdqs_public_options">' .
-			"<input type='radio' id='wdqs_placement-all_pages' name='wdqs[placement]' value='all_pages' {$checked} />" .
+			"<input type='radio' id='wdqs_placement-all_pages' name='wdqs[placement]' value='all_pages' {$checked} /> " .
 			'<label for="wdqs_placement-all_pages">' . __('Show on all public pages', 'wdqs') . '</label>' .
 			'<div><small>' . __('If you select this option, Status will be added to all public pages.', 'wdqs') . '</small></div>' .
 		'</div><br />';
@@ -55,7 +55,7 @@ class Wdqs_AdminFormRenderer {
 		$hook_disabled = ('use_hook' == $placement) ? '' : 'disabled="disabled"';
 		echo
 			'<div class="wdqs_public_options">' .
-			"<input type='radio' id='wdqs_placement-use_hook' name='wdqs[placement]' value='use_hook' {$checked} />" .
+			"<input type='radio' id='wdqs_placement-use_hook' name='wdqs[placement]' value='use_hook' {$checked} /> " .
 			'<label for="wdqs_placement-use_hook">' . __('Use this hook', 'wdqs') . ':</label> ' .
 			"<input type='text' name='wdqs[use_hook]' id='wdqs_placement-use_hook-target' size='32' value='{$use_hook}' {$hook_disabled} {$checked} />" .
 			'<div><small>' . __('Advanced: if you select this option, Status will be bound to this hook.', 'wdqs') . '</small></div>' .
@@ -64,10 +64,18 @@ class Wdqs_AdminFormRenderer {
 		$checked = ('manual' == $placement) ? 'checked="checked"' : '';
 		echo
 			'<div class="wdqs_public_options">' .
-			"<input type='radio' id='wdqs_placement-manual' name='wdqs[placement]' value='manual' {$checked} />" .
+			"<input type='radio' id='wdqs_placement-manual' name='wdqs[placement]' value='manual' {$checked} /> " .
 			'<label for="wdqs_placement-manual">' . __('Do not place it automatically, I will place it myself', 'wdqs') . '</label> ' .
 			'<div><small>' . __('Advanced: if you select this option, you will have to use <code>wdqs_quick_status()</code> function in your theme files to place Status wherever you want.', 'wdqs') . '</small></div>' .
 			'<div><small>' . __('Example usage: <code>if (function_exists("wdqs_quick_status")) wdqs_quick_status();</code>', 'wdqs') . '</small></div>' .
+		'</div><br />';
+
+		$checked = ('widget' == $placement) ? 'checked="checked"' : '';
+		echo
+			'<div class="wdqs_public_options">' .
+			"<input type='radio' id='wdqs_placement-widget' name='wdqs[placement]' value='widget' {$checked} /> " .
+			'<label for="wdqs_placement-widget">' . __('I will be using it in a widget', 'wdqs') . '</label> ' .
+			'<div><small>' . __('If you select this option, a new widget named <b>Status Update</b> will be available to you under <em>Appearance &gt; Widgets</em>.', 'wdqs') . '</small></div>' .
 		'</div><br />';
 	}
 	function create_show_on_dashboard_box () {
@@ -188,6 +196,11 @@ class Wdqs_AdminFormRenderer {
 		}
 		echo '</select>';
 		echo '<div><small>' . __('This category will be automatically added to all your generic &quot;Status&quot; posts.', 'wdqs')  . '</small></div>';
+	}
+
+	function create_externals_box () {
+		echo '<label for="">' . __('Add <code>rel="nofollow"</code> to the external links?', 'wdqs') . '</label> ';
+		echo $this->_create_checkbox('external_nofollow');
 	}
 
 }
