@@ -46,8 +46,12 @@ class Wdqs_PublicPages {
 			'width' => __('Width', 'wdqs'),
 			'leave_empty_for_defaults' => __('Leave these boxes empty for defaults', 'wdqs'),
 		));
-		echo '<script type="text/javascript">var _wdqs_ajaxurl="' . admin_url('admin-ajax.php') . '";</script>';
-		echo '<script type="text/javascript">var _wdqs_adminurl="' . admin_url() . '";</script>';
+
+		$options = apply_filters('wdqs-core-javascript_options', array(
+			"ajax_url" => admin_url('admin-ajax.php'),
+			"admin_url" => admin_url(),
+		));
+		printf('<script type="text/javascript">var _wdqs=%s;</script>', json_encode($options));
 	}
 
 	function css_load_styles () {
@@ -63,6 +67,7 @@ class Wdqs_PublicPages {
 	function status_widget () {
 		if (!$this->_check_permissions()) return false;
 		if (defined('WDQS_BOX_CREATED')) return false; // Already added
+		$status = false;
 		echo "<div>";
 		include(WDQS_PLUGIN_BASE_DIR . '/lib/forms/dashboard_widget.php');
 		echo "</div>";
@@ -71,7 +76,7 @@ class Wdqs_PublicPages {
 
 	private function _check_permissions () {
 		global $current_user;
-		$level = $this->data->get("contributors") ? "edit_posts" : "publish_posts";
+		$level = WDQS_PUBLISH_CAPABILITY;//$this->data->get("contributors") ? "edit_posts" : "publish_posts";
 		if (!current_user_can($level)) return false;
 		if (!$current_user->ID) return false;
 
@@ -81,6 +86,35 @@ class Wdqs_PublicPages {
 		if ('front_page' == $placement && !is_front_page()) return false;
 
 		return true;
+	}
+
+	function html5_video_support_javascript ($options) {
+		$html5_video = $this->data->get('html5_video');
+
+		$html5_video_types = explode(
+			',', 
+			(@$html5_video['video_types'] ? $html5_video['video_types'] : 'webm, mp4, ogg, ogv')
+		);
+		$html5_video_types = is_array($html5_video_types) 
+			? array_map('trim', $html5_video_types)
+			: array()
+		;
+
+		$options['html5_video'] = array(
+			"allowed" => (int)@$html5_video['use_html5_video'],
+			"video_unavailable" => @$html5_video['unavailable'] ? $html5_video['unavailable'] : __('Not supported', 'wdqs'),
+			"video_types" => $html5_video_types,
+		);
+		return $options;
+	}
+
+	function oembed_providers_list ($options) {
+		if (!class_exists('WP_oEmbed')) require_once(ABSPATH . '/wp-includes/class-oembed.php');
+		$wp_oembed = new WP_oEmbed();
+		$provider_rx = array();
+		foreach(array_keys($wp_oembed->providers) as $rx) $provider_rx[] = preg_replace('/#i?/', '', $rx);
+		$options['oembed']['providers'] = $provider_rx;
+		return $options;
 	}
 
 
@@ -98,6 +132,10 @@ class Wdqs_PublicPages {
 			$hook = $hook ? $hook : 'loop_start';
 			add_action($hook, array($this, 'status_widget'), 100);
 		}
+
+		// Internal
+		add_filter('wdqs-core-javascript_options', array($this, 'html5_video_support_javascript'), 9);
+		add_filter('wdqs-core-javascript_options', array($this, 'oembed_providers_list'), 9);
 	}
 }
 

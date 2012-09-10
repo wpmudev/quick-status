@@ -24,7 +24,7 @@ function publishPostData (e) {
 	var $root = $("#wdqs-dashboard-widget").parent();
 	$root.html('<div class="wdqs-waiting-for-response"></div>');
 	
-	$.post(_wdqs_ajaxurl, {
+	$.post(_wdqs.ajax_url, {
 		"action": "wdqs_post",
 		"is_draft": is_draft,
 		"data": text,
@@ -126,7 +126,7 @@ function callPreviewUpdate () {
 	var width = $("#wdqs-width").length ? $("#wdqs-width").val() : 0;
 	
 	$("#wdqs-preview-root").html('<div class="wdqs-waiting-for-response"></div>');
-	$.post(_wdqs_ajaxurl, {
+	$.post(_wdqs.ajax_url, {
 		"action": "wdqs_generate_preview",
 		"text": text,
 		"title": title,
@@ -271,9 +271,15 @@ function imageToEditor (html) {
 }
 
 function videoToEditor (html) {
-	mediaToEditor(html);
-	$("#wdqs-preview-root").html(html);
-	setPreviewTitle($(html).text());
+	var obj ={
+		"html": html,
+		"title": $(html).text()
+	};
+	$(document).trigger('wdqs-media_to_editor-video', [obj]);
+	mediaToEditor(obj.html || html);
+	$("#wdqs-preview-root").html(obj.html || html);
+	setPreviewTitle(obj.title || title);
+	$(document).trigger('wdqs-media_to_editor-postprocess_video', [obj]);
 }
 
 function mediaToEditor (src) {
@@ -284,7 +290,7 @@ function mediaToEditor (src) {
 }
 
 function showVideoUpload () {
-	var pfx = _isPublicPage ? _wdqs_adminurl + '/' : '';
+	var pfx = _isPublicPage ? _wdqs.admin_url + '/' : '';
 	var height = $(window).height*0.35;
 	tb_show("Upload Video", pfx + "media-upload.php?type=video&TB_iframe=1&width=640&height="+height);
 	_oldSentToEditor = window.send_to_editor;
@@ -292,7 +298,7 @@ function showVideoUpload () {
 }
 
 function showImageUpload () {
-	var pfx = _isPublicPage ? _wdqs_adminurl + '/' : '';
+	var pfx = _isPublicPage ? _wdqs.admin_url + '/' : '';
 	var height = $(window).height*0.35;
 	tb_show("Upload Image", pfx + "media-upload.php?type=image&TB_iframe=1&width=640&height="+height);
 	_oldSentToEditor = window.send_to_editor;
@@ -371,7 +377,7 @@ $("#wdqs-next").live('click', function () {
 /*** Initialize ***/
 function init () {
 	if (!$("#wdqs-dashboard-widget").length) return false;
-	if (typeof window.send_to_editor != 'function' || typeof _wdqs_adminurl != 'undefined') {
+	if (typeof window.send_to_editor != 'function' || typeof _wdqs.admin_url != 'undefined') {
 		_isPublicPage = true;
 		// Neutralize wpautop
 		$("#wdqs-dashboard-widget p").each(function () {
@@ -384,5 +390,49 @@ function init () {
 	$("#wdqs-status-arrow-container").css("display", "block");
 }
 init();
+
+// Recognize oEmbed URLs, used for embedding videos in the "From URL" field
+$(document).bind("wdqs-media_to_editor-postprocess_video", function (e, obj) {
+	var $old = $(obj.html),
+		href = $old.attr("href");
+		providers = (_wdqs.oembed && _wdqs.oembed.providers ? _wdqs.oembed.providers : [])
+	;
+	$.each(providers, function () {
+		var rx = new RegExp(this.valueOf());
+		if (!href.match(rx)) return true;
+		mediaToEditor(href);
+		callPreviewUpdate();
+		return false;
+	});
+});
+
+
+if (_wdqs.html5_video && _wdqs.html5_video.allowed) {
+	$(document).bind("wdqs-media_to_editor-video", function (e, obj) {
+		var $old = $(obj.html);
+		if (!$old.is("a")) return obj;
+		var href = $old.attr("href");
+		var supported = false;
+
+		$.each(_wdqs.html5_video.video_types, function () {
+			var rx = new RegExp('\.(' + this.valueOf() + ')$');
+			if (!href.match(rx)) return true;
+			supported = true;
+			return false;
+		});
+
+		if (!supported) return obj;
+
+		obj.html = $("<div />")
+			.append("<video controls='yes'>" +
+				"<source src='" + href + "' />" +
+				"<a href='" + href + "'>" + _wdqs.html5_video.video_unavailable + "</a>" +
+			"</video>")
+			.html()
+		;
+		obj.wdqs_html_video = true;
+	});
+}
+
 });
 })(jQuery);

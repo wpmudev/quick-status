@@ -42,10 +42,12 @@ class Wdqs_AdminPages {
 	}
 
 	private function _check_permissions () {
+		/*
 		if ($this->data->get("contributors")) {
 			return current_user_can("edit_posts");
 		}
-		return current_user_can("publish_posts");
+		*/
+		return current_user_can(WDQS_PUBLISH_CAPABILITY);
 	}
 
 	function js_load_scripts () {
@@ -67,7 +69,11 @@ class Wdqs_AdminPages {
 			'width' => __('Width', 'wdqs'),
 			'leave_empty_for_defaults' => __('Leave these boxes empty for defaults', 'wdqs'),
 		));
-		echo '<script type="text/javascript">var _wdqs_ajaxurl="' . admin_url('admin-ajax.php') . '";</script>';
+
+		$options = apply_filters('wdqs-core-javascript_options', array(
+			"ajax_url" => admin_url('admin-ajax.php'),
+		));
+		printf('<script type="text/javascript">var _wdqs=%s;</script>', json_encode($options));
 	}
 
 	function css_load_styles () {
@@ -85,12 +91,16 @@ class Wdqs_AdminPages {
 		add_settings_field('wdqs_public', __('Show on public pages', 'wdqs'), array($form, 'create_show_on_public_pages_box'), 'wdqs_options_page', 'wdqs_settings');
 		add_settings_field('wdqs_back', __('Show on Dashboard', 'wdqs'), array($form, 'create_show_on_dashboard_box'), 'wdqs_options_page', 'wdqs_settings');
 		add_settings_field('wdqs_contributors', __('Allow submitting for review', 'wdqs'), array($form, 'create_contributors_box'), 'wdqs_options_page', 'wdqs_settings');
+		//add_settings_field('wdqs_allow_cap_override', __('Allow capability overrides', 'wdqs'), array($form, 'create_cap_override_box'), 'wdqs_options_page', 'wdqs_settings');
 
 		add_settings_section('wdqs_post', __('Status post settings', 'wdqs'), create_function('', ''), 'wdqs_options_page');
 		add_settings_field('wdqs_title', __('Default title', 'wdqs'), array($form, 'create_title_box'), 'wdqs_options_page', 'wdqs_post');
 		add_settings_field('wdqs_format', __('Post format', 'wdqs'), array($form, 'create_post_format_box'), 'wdqs_options_page', 'wdqs_post');
 		add_settings_field('wdqs_category', __('Post categories', 'wdqs'), array($form, 'create_post_category_box'), 'wdqs_options_page', 'wdqs_post');
-		add_settings_field('wdqs_external', __('External links', 'wdqs'), array($form, 'create_externals_box'), 'wdqs_options_page', 'wdqs_post');
+
+		add_settings_section('wdqs_extra', __('Extras', 'wdqs'), create_function('', ''), 'wdqs_options_page');
+		add_settings_field('wdqs_external', __('External links', 'wdqs'), array($form, 'create_externals_box'), 'wdqs_options_page', 'wdqs_extra');
+		add_settings_field('wdqs_html5_video', __('Simple HTML5 video support', 'wdqs'), array($form, 'create_html5_video_box'), 'wdqs_options_page', 'wdqs_extra');
 	}
 
 	function create_admin_menu_entry () {
@@ -118,6 +128,7 @@ class Wdqs_AdminPages {
 	}
 
 	function status_dashboard_widget () {
+		$status = false;
 		include(WDQS_PLUGIN_BASE_DIR . '/lib/forms/dashboard_widget.php');
 	}
 
@@ -221,8 +232,10 @@ class Wdqs_AdminPages {
 		$rel = $this->data->get('external_nofollow') ? 'rel="nofollow"' : '';
 		$extra_link_attributes = apply_filters('wdqs-link-extra_attributes', "{$rel}");
 
+		$template_file = locate_template('wdqs-link_preview.php');
+		$template_file = is_file($template_file) ? $template_file : WDQS_PLUGIN_BASE_DIR . '/lib/forms/link_preview.php';
 		ob_start();
-		include(WDQS_PLUGIN_BASE_DIR . '/lib/forms/link_preview.php');
+		include($template_file);
 		$preview = ob_get_contents();
 		ob_end_clean();
 		return $preview;
@@ -351,11 +364,52 @@ class Wdqs_AdminPages {
 		exit();
 	}
 
+	function inject_settings_link ($links) {
+		$settings = '<a href="' .
+			(is_network_admin() ? network_admin_url('settings.php?page=wdqs') : admin_url('admin.php?page=wdqs')) .
+			'">' . __('Settings', 'wdqs') . 
+		'</a>';
+		array_unshift($links, $settings);
+		return $links;
+	}
+
+	function html5_video_support_javascript ($options) {
+		$html5_video = $this->data->get('html5_video');
+
+		$html5_video_types = explode(
+			',', 
+			(@$html5_video['video_types'] ? $html5_video['video_types'] : 'webm, mp4, ogg, ogv')
+		);
+		$html5_video_types = is_array($html5_video_types) 
+			? array_map('trim', $html5_video_types)
+			: array()
+		;
+
+		$options['html5_video'] = array(
+			"allowed" => (int)@$html5_video['use_html5_video'],
+			"video_unavailable" => @$html5_video['unavailable'] ? $html5_video['unavailable'] : __('Not supported', 'wdqs'),
+			"video_types" => $html5_video_types,
+		);
+		return $options;
+	}
+
+	function oembed_providers_list ($options) {
+		if (!class_exists('WP_oEmbed')) require_once(ABSPATH . '/wp-includes/class-oembed.php');
+		$wp_oembed = new WP_oEmbed();
+		$provider_rx = array();
+		foreach(array_keys($wp_oembed->providers) as $rx) $provider_rx[] = preg_replace('/#i?/', '', $rx);
+		$options['oembed']['providers'] = $provider_rx;
+		return $options;
+	}
+
 	function add_hooks () {
 		// Step0: Register options and menu
 		add_action('admin_init', array($this, 'register_settings'));
 		add_action('admin_menu', array($this, 'create_admin_menu_entry'));
 		add_action('network_admin_menu', array($this, 'create_admin_menu_entry'));
+		
+		add_filter('plugin_action_links_' . WDQS_PLUGIN_CORE_BASENAME, array($this, 'inject_settings_link'));
+		add_filter('network_admin_plugin_action_links_' . WDQS_PLUGIN_CORE_BASENAME, array($this, 'inject_settings_link'));
 
 		add_action('admin_print_scripts-index.php', array($this, 'js_load_scripts'));
 		add_action('admin_print_styles-index.php', array($this, 'css_load_styles'));
@@ -365,5 +419,8 @@ class Wdqs_AdminPages {
 		add_action('wp_ajax_wdqs_generate_preview', array($this, 'json_generate_preview'));
 		add_action('wp_ajax_wdqs_post', array($this, 'json_post'));
 
+		// Internal
+		add_filter('wdqs-core-javascript_options', array($this, 'html5_video_support_javascript'), 9);
+		add_filter('wdqs-core-javascript_options', array($this, 'oembed_providers_list'), 9);
 	}
 }

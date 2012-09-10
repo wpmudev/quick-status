@@ -61,6 +61,13 @@ function toggle_use_hook () {
 toggle_use_hook();
 $(".wdqs_public_options input:radio").change(toggle_use_hook);
 
+function toggle_html5_video_support () {
+	if ($("#html5-use_html5_video").is(":checked")) $(".wdqs-html5_video").attr("disabled", false);
+	else $(".wdqs-html5_video").attr("disabled", true);
+}
+toggle_html5_video_support();
+$("#html5-use_html5_video").change(toggle_html5_video_support);
+
 });
 })(jQuery);
 </script>

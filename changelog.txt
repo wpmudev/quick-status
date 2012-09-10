@@ -5,6 +5,14 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.6 - 2012-09-10
+----------------------------------------------------------------------
+- New capability-based check makes plugins integration possible.
+- Built-in granular options.
+- Optional widget output improvements.
+- Fix for video "From URL" insertion issue.
+- Optional basic HTML5 video element support.
+
 1.5 - 2012-08-15
 ----------------------------------------------------------------------
 - Fix for Thickbox z-index issue.

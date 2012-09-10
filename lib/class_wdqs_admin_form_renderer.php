@@ -82,9 +82,34 @@ class Wdqs_AdminFormRenderer {
 		echo $this->_create_checkbox('show_on_dashboard');
 	}
 	function create_contributors_box () {
+		/*
 		echo $this->_create_checkbox('contributors');
 		echo '<div><small>' . __('Selecting this option will allow your Contributors to use Status prompt to submit their updates for review.', 'wdqs') . '</small></div>';
+		*/
+		$opt = $this->_get_option();
+		$contributors = (int)@$opt['contributors'] ? 'checked="checked"' : '';
+		$subscribers = (int)@$opt['subscribers'] ? 'checked="checked"' : '';
+		echo '' .
+			'<input type="hidden" name="wdqs[contributors]" value="" />' .
+			'<input type="checkbox" name="wdqs[contributors]" id="wdqs-contributors" value="1" ' . $contributors . ' />' .
+			'&nbsp;' .
+			'<label for="wdqs-contributors">' . __('Contributors', 'wdqs') . '</label>' .
+			'<div><small>' . __('Selecting this option will allow your Contributors to use Status prompt to submit their updates for review.', 'wdqs') . '</small></div>' .
+		'';
+		echo '' .
+			'<input type="hidden" name="wdqs[subscribers]" value="" />' .
+			'<input type="checkbox" name="wdqs[subscribers]" id="wdqs-subscribers" value="1" ' . $subscribers . ' />' .
+			'&nbsp;' .
+			'<label for="wdqs-subscribers">' . __('Subscribers', 'wdqs') . '</label>' .
+			'<div><small>' . __('Selecting this option will allow your Subscribers to use Status prompt to submit their updates for review.', 'wdqs') . '</small></div>' .
+		'';
 	}
+	/*
+	function create_cap_override_box () {
+		echo $this->_create_checkbox('override_publishing_settings');
+		echo '<div><small>' . __('Selecting this option will allow you to control who can use the Status update box on your site.', 'wdqs') . '</small></div>';
+	}
+	*/
 
 	function create_title_box () {
 		$opts = $this->_get_option();
@@ -201,6 +226,29 @@ class Wdqs_AdminFormRenderer {
 	function create_externals_box () {
 		echo '<label for="">' . __('Add <code>rel="nofollow"</code> to the external links?', 'wdqs') . '</label> ';
 		echo $this->_create_checkbox('external_nofollow');
+	}
+
+	function create_html5_video_box () {
+		$opts = $this->_get_option();
+		$not_available = @$opts['html5_video']['unavailable'] ? $opts['html5_video']['unavailable'] : __('Not supported', 'wdqs');
+		$use_html5_video = @$opts['html5_video']['use_html5_video'] ? 'checked="checked"' : '';
+		$video_types = @$opts['html5_video']['video_types'] ? trim(wp_strip_all_tags(@$opts['html5_video']['video_types'])) : 'webm, mp4, ogg, ogv';
+
+		echo '' .
+			"<input type='hidden' name='wdqs[html5_video][use_html5_video]' value='' />" .
+			"<input type='checkbox' id='html5-use_html5_video' name='wdqs[html5_video][use_html5_video]' value='1' {$use_html5_video} />" .
+			'&nbsp;' .
+			'<label for="html5-use_html5_video">' . __('Use simple HTML5 video embeds for uploaded videos', 'wdqs') . '</label>' .
+			"<div><small>" . __('Enable this to allow inserting uploaded videos as HTML5 video elements instead of default', 'wdqs') . '</small></div>' .
+		'';
+		echo '<label for="html5-video_unavailable">' . __('Not available message', 'wdqs') . '</label>: ' .
+			"<input type='text' class='widefat wdqs-html5_video' id='html5-video_unavailable' name='wdqs[html5_video][unavailable]' value='{$not_available}' />" .
+			"<div><small>" . __('This is what will be used as fallback title for unsupported video links', 'wdqs') . '</small></div>' .
+		'';
+		echo '<label for="html5-video_types">' . __('File formats', 'wdqs') . '</label>: ' .
+			"<input type='text' class='widefat wdqs-html5_video' id='html5-video_types' name='wdqs[html5_video][video_types]' value='{$video_types}' />" .
+			"<div><small>" . __('This is a list of recognized formats / file extensions (comma separated)', 'wdqs') . '</small></div>' .
+		'';
 	}
 
 }

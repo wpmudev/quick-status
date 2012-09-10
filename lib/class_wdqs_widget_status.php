@@ -34,6 +34,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$count = esc_attr($instance['count']);
 		$autorefresh = esc_attr($instance['autorefresh']);
 		$avatars = esc_attr($instance['avatars']);
+		$date_checked = isset($instance['date']) && (int)$instance['date'] ? 'checked="checked"' : false;
 
 		// Set defaults
 		// ...
@@ -71,6 +72,11 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$html .= '</select>';
 		$html .= '</p>';
 
+		$html .= '<p>';
+		$html .= '<input type="checkbox" name="' . $this->get_field_name('date') . '" id="' . $this->get_field_id('date') . '" value="1" ' . $date_checked . '"/>&nbsp;';
+		$html .= '<label for="' . $this->get_field_id('date') . '">' . __('Show date', 'wdqs') . '</label>';
+		$html .= '</p>';
+
 		echo $html;
 	}
 
@@ -80,6 +86,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$instance['count'] = strip_tags($new_instance['count']);
 		$instance['autorefresh'] = strip_tags($new_instance['autorefresh']);
 		$instance['avatars'] = strip_tags($new_instance['avatars']);
+		$instance['date'] = strip_tags($new_instance['date']);
 
 		return $instance;
 	}
@@ -91,6 +98,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$count = $count ? $count : 1;
 		$autorefresh = $instance['autorefresh'];
 		$this->_avatars = esc_attr($instance['avatars']);
+		$this->_date = esc_attr($instance['date']);
 
 		echo $before_widget;
 		if ($title) echo $before_title . $title . $after_title;
@@ -136,6 +144,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 				$this->_get_avatar_markup($post) . 
 				'<div class="wdqs_widget_status_title">' . $post->post_title . '</div>' .
 				'<div class="wdqs_widget_status_body">' . $post->post_content . '</div>' .
+				$this->_get_post_meta($post) .
 			'</li>';
 			$out .= $item;
 		}
@@ -154,6 +163,21 @@ class Wdqs_WidgetStatus extends WP_Widget {
 
 		$avatar = get_avatar($post->post_author, $size, null, $name);
 		return '<div class="wdqs-author_avatar ' . esc_attr($key) . '" title="' . esc_attr($name) . '">' . $avatar . '</div>';
+	}
+
+	private function _get_post_meta ($post) {
+		if ($this->_date) {
+			$date_format = apply_filters('wdqs-widget-post_meta-date_format',
+				(defined('WDQS_WIDGET_DATE_FORMAT') && WDQS_WIDGET_DATE_FORMAT
+					? WDQS_WIDGET_DATE_FORMAT
+					: get_option("date_format") . ' ' . get_option("time_format")
+			));
+			$date = mysql2date($date_format, $post->post_date);
+		}
+
+		return '<div class="wdqs-post_meta">' . 
+			apply_filters('wdqs-post_meta', '<div class="wdqs-post_meta-date">' . $date . '</div>', $post) .
+		'</div>';
 	}
 
 	private function _get_status_posts ($count=1, $type=false) {
