@@ -5,6 +5,12 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.6.1 - 2012-10-16
+----------------------------------------------------------------------
+- Fix for thumbnail links with nofollow option.
+- Added excerpt word limit in widget options.
+- Added author URL in widget options.
+
 1.6 - 2012-09-10
 ----------------------------------------------------------------------
 - New capability-based check makes plugins integration possible.

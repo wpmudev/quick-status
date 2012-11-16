@@ -10,7 +10,7 @@
 		</ul>
 		<?php } else if ($image) { ?>
 			<?php $image = preg_match('!^https?:!', $image) ? $image : $link . '/' . ltrim($image, '/');?>
-			<a href="<?php echo $link;?>" target="_blank"><img src="<?php echo $image;?>" /></a>
+			<a href="<?php echo $link;?>" <?php echo $extra_link_attributes; ?> target="_blank"><img src="<?php echo $image;?>" /></a>
 		<?php } ?>
 	</div>
 	<div class="wdqs-text-container">

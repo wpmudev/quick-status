@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Status\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-09-10 14:50+0100\n"
-"PO-Revision-Date: 2012-09-10 14:50+0100\n"
+"POT-Creation-Date: 2012-11-16 14:41+0100\n"
+"PO-Revision-Date: 2012-11-16 14:41+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
@@ -11,6 +11,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
 "X-Poedit-Basepath: D:\\xampp\\htdocs\\status\\wp-content\\plugins\\status\n"
+"X-Generator: Poedit 1.5.4\n"
 "X-Poedit-SearchPath-0: lib\n"
 "X-Poedit-SearchPath-1: lib/forms\n"
 
@@ -27,7 +28,8 @@ msgid "Show on front page only"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:43
-msgid "If you select this option, Status will be added to your front page only."
+msgid ""
+"If you select this option, Status will be added to your front page only."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:50
@@ -51,11 +53,16 @@ msgid "Do not place it automatically, I will place it myself"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:69
-msgid "Advanced: if you select this option, you will have to use <code>wdqs_quick_status()</code> function in your theme files to place Status wherever you want."
+msgid ""
+"Advanced: if you select this option, you will have to use "
+"<code>wdqs_quick_status()</code> function in your theme files to place "
+"Status wherever you want."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:70
-msgid "Example usage: <code>if (function_exists(\"wdqs_quick_status\")) wdqs_quick_status();</code>"
+msgid ""
+"Example usage: <code>if (function_exists(\"wdqs_quick_status\")) "
+"wdqs_quick_status();</code>"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:77
@@ -63,7 +70,9 @@ msgid "I will be using it in a widget"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:78
-msgid "If you select this option, a new widget named <b>Status Update</b> will be available to you under <em>Appearance &gt; Widgets</em>."
+msgid ""
+"If you select this option, a new widget named <b>Status Update</b> will be "
+"available to you under <em>Appearance &gt; Widgets</em>."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:96
@@ -71,7 +80,9 @@ msgid "Contributors"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:97
-msgid "Selecting this option will allow your Contributors to use Status prompt to submit their updates for review."
+msgid ""
+"Selecting this option will allow your Contributors to use Status prompt to "
+"submit their updates for review."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:103
@@ -79,7 +90,9 @@ msgid "Subscribers"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:104
-msgid "Selecting this option will allow your Subscribers to use Status prompt to submit their updates for review."
+msgid ""
+"Selecting this option will allow your Subscribers to use Status prompt to "
+"submit their updates for review."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:116
@@ -89,12 +102,15 @@ msgid "My quick %s post"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:118
-msgid "This is what will be used as fallback title for your Status posts by default"
+msgid ""
+"This is what will be used as fallback title for your Status posts by default"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:119
 #, php-format
-msgid "Use <code>%s</code> anywhere in your title to insert the post type (i.e. status, link, image, video)"
+msgid ""
+"Use <code>%s</code> anywhere in your title to insert the post type (i.e. "
+"status, link, image, video)"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:127
@@ -137,7 +153,8 @@ msgid "Generic Status post format:"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:170
-msgid "This format will be applied to all your generic &quot;Status&quot; posts."
+msgid ""
+"This format will be applied to all your generic &quot;Status&quot; posts."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:177
@@ -152,7 +169,8 @@ msgid "No category"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:187
-msgid "This category will be automatically added to all your &quot;Link&quot; posts."
+msgid ""
+"This category will be automatically added to all your &quot;Link&quot; posts."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:189
@@ -160,7 +178,9 @@ msgid "Image category:"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:199
-msgid "This category will be automatically added to all your &quot;Image&quot; posts."
+msgid ""
+"This category will be automatically added to all your &quot;Image&quot; "
+"posts."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:201
@@ -168,7 +188,9 @@ msgid "Video category:"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:211
-msgid "This category will be automatically added to all your &quot;Video&quot; posts."
+msgid ""
+"This category will be automatically added to all your &quot;Video&quot; "
+"posts."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:213
@@ -176,7 +198,9 @@ msgid "Generic Status category:"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:223
-msgid "This category will be automatically added to all your generic &quot;Status&quot; posts."
+msgid ""
+"This category will be automatically added to all your generic &quot;"
+"Status&quot; posts."
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:227
@@ -184,8 +208,7 @@ msgid "Add <code>rel=\"nofollow\"</code> to the external links?"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:233
-#: lib/class_wdqs_admin_pages.php:390
-#: lib/class_wdqs_public_pages.php:105
+#: lib/class_wdqs_admin_pages.php:390 lib/class_wdqs_public_pages.php:105
 msgid "Not supported"
 msgstr ""
 
@@ -194,7 +217,9 @@ msgid "Use simple HTML5 video embeds for uploaded videos"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:242
-msgid "Enable this to allow inserting uploaded videos as HTML5 video elements instead of default"
+msgid ""
+"Enable this to allow inserting uploaded videos as HTML5 video elements "
+"instead of default"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:244
@@ -210,56 +235,47 @@ msgid "File formats"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:250
-msgid "This is a list of recognized formats / file extensions (comma separated)"
+msgid ""
+"This is a list of recognized formats / file extensions (comma separated)"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:62
-#: lib/class_wdqs_public_pages.php:39
+#: lib/class_wdqs_admin_pages.php:62 lib/class_wdqs_public_pages.php:39
 msgid "No thumbnail"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:63
-#: lib/class_wdqs_public_pages.php:40
+#: lib/class_wdqs_admin_pages.php:63 lib/class_wdqs_public_pages.php:40
 msgid "of"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:64
-#: lib/class_wdqs_public_pages.php:41
+#: lib/class_wdqs_admin_pages.php:64 lib/class_wdqs_public_pages.php:41
 msgid "images found"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:65
-#: lib/class_wdqs_public_pages.php:42
+#: lib/class_wdqs_admin_pages.php:65 lib/class_wdqs_public_pages.php:42
 msgid "Use default title"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:66
-#: lib/class_wdqs_public_pages.php:43
+#: lib/class_wdqs_admin_pages.php:66 lib/class_wdqs_public_pages.php:43
 msgid "Use this title"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:67
-#: lib/class_wdqs_public_pages.php:44
+#: lib/class_wdqs_admin_pages.php:67 lib/class_wdqs_public_pages.php:44
 msgid "Post title"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:68
-#: lib/class_wdqs_public_pages.php:45
+#: lib/class_wdqs_admin_pages.php:68 lib/class_wdqs_public_pages.php:45
 msgid "Height"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:69
-#: lib/class_wdqs_public_pages.php:46
+#: lib/class_wdqs_admin_pages.php:69 lib/class_wdqs_public_pages.php:46
 msgid "Width"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:70
-#: lib/class_wdqs_public_pages.php:47
+#: lib/class_wdqs_admin_pages.php:70 lib/class_wdqs_public_pages.php:47
 msgid "Leave these boxes empty for defaults"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:90
-#: lib/forms/plugin_settings.php:2
+#: lib/class_wdqs_admin_pages.php:90 lib/forms/plugin_settings.php:2
 msgid "Status settings"
 msgstr ""
 
@@ -303,8 +319,7 @@ msgstr ""
 msgid "Simple HTML5 video support"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:123
-#: lib/class_wdqs_admin_pages.php:140
+#: lib/class_wdqs_admin_pages.php:123 lib/class_wdqs_admin_pages.php:140
 #: lib/forms/dashboard_widget.php:12
 msgid "Status"
 msgstr ""
@@ -317,57 +332,83 @@ msgstr ""
 msgid "Shows Status update form in a widget"
 msgstr ""
 
-#: lib/class_wdqs_widget_posting.php:19
-#: lib/class_wdqs_widget_status.php:43
+#: lib/class_wdqs_widget_posting.php:19 lib/class_wdqs_widget_status.php:51
 msgid "Title:"
 msgstr ""
 
 #: lib/class_wdqs_widget_posting.php:25
-msgid "Please, switch your placement settings to <em>manual</em> in plugin settings"
+msgid ""
+"Please, switch your placement settings to <em>manual</em> in plugin settings"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:16
+#: lib/class_wdqs_widget_status.php:18
 msgid "Shows one or more last Status posts"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:24
+#: lib/class_wdqs_widget_status.php:26
 msgid "No avatars"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:25
+#: lib/class_wdqs_widget_status.php:27
 msgid "Small"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:26
+#: lib/class_wdqs_widget_status.php:28
 msgid "Medium"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:27
+#: lib/class_wdqs_widget_status.php:29
 msgid "Large"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:28
+#: lib/class_wdqs_widget_status.php:30
 msgid "Huge"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:48
+#: lib/class_wdqs_widget_status.php:34
+msgid "No limit"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:56
 msgid "Show this many posts:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:57
+#: lib/class_wdqs_widget_status.php:65
 msgid "Auto-update rate <small>(seconds)</small>:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:59
+#: lib/class_wdqs_widget_status.php:67
 msgid "Never auto-update"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:67
+#: lib/class_wdqs_widget_status.php:75
 msgid "Show avatars:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:77
+#: lib/class_wdqs_widget_status.php:84
+msgid "Link author avatars to their author/profile pages"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:88
+msgid "Allow external author links"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:93
 msgid "Show date"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:97
+msgid "Limit my excerpts to this many words:"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:103
+msgid ""
+"Only excerpts estimated to be longer then the selected value will be "
+"processed."
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:104
+msgid "Please, note that the processed excerpts wil lose any HTML formatting."
 msgstr ""
 
 #: lib/forms/dashboard_widget.php:4
@@ -406,4 +447,3 @@ msgstr ""
 #: lib/forms/dashboard_widget.php:30
 msgid "Draft"
 msgstr ""
-
