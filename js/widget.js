@@ -331,29 +331,29 @@ function switchContentType ($a, showUploads) {
 }
 
 /*** Textarea handlers ***/
-$("#wdqs-status").live('focus', attemptTextareaResize);
-$("#wdqs-status").live('keyup', handleKeyEvent);
-$("#wdqs-status").live('paste', handlePasteEvent);
+$(document).on('focus', "#wdqs-status", attemptTextareaResize);
+$(document).on('keyup', "#wdqs-status", handleKeyEvent);
+$(document).on('paste', "#wdqs-status", handlePasteEvent);
 
 /*** Control handlers ***/
-$("#wdqs-preview").live('click', handlePreviewRequest);
-$("#wdqs-reset").live('click', resetData);
-$("#wdqs-post, #wdqs-draft").live('click', publishPostData);
+$(document).on('click', "#wdqs-preview", handlePreviewRequest);
+$(document).on('click', "#wdqs-reset", resetData);
+$(document).on('click', "#wdqs-post, #wdqs-draft", publishPostData);
 
 /*** Tabs handlers ***/
-$(".wdqs-type-switch").live('click', function () {switchContentType($(this), true); return false;});
+$(document).on('click', ".wdqs-type-switch", function () {switchContentType($(this), true); return false;});
 
 /*** Link type editing events ***/
-$("#wdqs-preview-root .wdqs-title-container").live('mouseenter', function(){$(this).addClass("wdqs-hover");});
-$("#wdqs-preview-root .wdqs-title-container").live('mouseleave', function(){$(this).removeClass("wdqs-hover");}); 
-$("#wdqs-preview-root .wdqs-title-container").live('click', changeLinkTitle);
+$(document).on('mouseenter', "#wdqs-preview-root .wdqs-title-container", function(){$(this).addClass("wdqs-hover");});
+$(document).on('mouseleave', "#wdqs-preview-root .wdqs-title-container", function(){$(this).removeClass("wdqs-hover");});
+$(document).on('click', "#wdqs-preview-root .wdqs-title-container", changeLinkTitle);
 
-$("#wdqs-preview-root .wdqs-text-container").live('mouseenter', function(){$(this).addClass("wdqs-hover");}); 
-$("#wdqs-preview-root .wdqs-text-container").live('mouseleave', function(){$(this).removeClass("wdqs-hover");});
-$("#wdqs-preview-root .wdqs-text-container").live('click', changeTextContent);
+$(document).on('mouseenter', "#wdqs-preview-root .wdqs-text-container", function(){$(this).addClass("wdqs-hover");});
+$(document).on('mouseleave', "#wdqs-preview-root .wdqs-text-container", function(){$(this).removeClass("wdqs-hover");});
+$(document).on('click', "#wdqs-preview-root .wdqs-text-container", changeTextContent);
 
 /*** Prev/Next handlers ***/
-$("#wdqs-previous").live('click', function () {
+$(document).on('click', "#wdqs-previous", function () {
 	var $current = $(".wdqs-image-list li:visible:first");
 	if ($current.get(0) == $(".wdqs-image-list li:first").get(0)) return false; // First image
 	$current
@@ -363,7 +363,7 @@ $("#wdqs-previous").live('click', function () {
 	$("#wdqs-img-count").text($current.prevAll().length);
 	return false;
 });
-$("#wdqs-next").live('click', function () {
+$(document).on('click', "#wdqs-next", function () {
 	var $current = $(".wdqs-image-list li:visible:first");
 	if ($current.get(0) == $(".wdqs-image-list li:last").get(0)) return false; // Last image
 	$current

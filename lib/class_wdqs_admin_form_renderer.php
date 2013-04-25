@@ -250,5 +250,14 @@ class Wdqs_AdminFormRenderer {
 			"<div><small>" . __('This is a list of recognized formats / file extensions (comma separated)', 'wdqs') . '</small></div>' .
 		'';
 	}
+	
+	function create_download_box () {
+		echo '<label for="">' . __('Attempt to download external images?', 'wdqs') . '</label> ' .
+			$this->_create_checkbox('download_images-images') .
+		'<br />';
+		echo '<label for="">' . __('Attempt to download external images for links?', 'wdqs') . '</label> ' .
+			$this->_create_checkbox('download_images-links') .
+		'<br />';
+	}
 
 }

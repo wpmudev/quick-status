@@ -3,7 +3,7 @@
 Plugin Name: Status
 Plugin URI: http://premium.wpmudev.org/
 Description: Quickly post your status
-Version: 1.6.1
+Version: 1.7
 Author: Ve Bailovity (Incsub)
 Author URI: http://premium.wpmudev.org
 WDP ID: 242
@@ -23,18 +23,6 @@ You should have received a copy of the GNU General Public License
 along with this program; if not, write to the Free Software
 Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 */
-
-///////////////////////////////////////////////////////////////////////////
-/* -------------------- Update Notifications Notice -------------------- */
-if ( !function_exists( 'wdp_un_check' ) ) {
-	add_action( 'admin_notices', 'wdp_un_check', 5 );
-	add_action( 'network_admin_notices', 'wdp_un_check', 5 );
-	function wdp_un_check() {
-		if ( !class_exists( 'WPMUDEV_Update_Notifications' ) && current_user_can( 'install_plugins' ) )
-			echo '<div class="error fade"><p>' . __('Please install the latest version of <a href="http://premium.wpmudev.org/project/update-notifications/" title="Download Now &raquo;">our free Update Notifications plugin</a> which helps you stay up-to-date with the most stable, secure versions of WPMU DEV themes and plugins. <a href="http://premium.wpmudev.org/wpmu-dev/update-notifications-plugin-information/">More information &raquo;</a>', 'wpmudev') . '</a></p></div>';
-	}
-}
-/* --------------------------------------------------------------------- */
 
 define ('WDQS_PLUGIN_SELF_DIRNAME', basename(dirname(__FILE__)), true);
 define ('WDQS_PLUGIN_CORE_BASENAME', plugin_basename(__FILE__), true);
@@ -104,10 +92,13 @@ function wdqs_wp_user_capability_check ($all, $requested, $args=array()) {
 }
 add_filter('user_has_cap', 'wdqs_wp_user_capability_check', 10, 3);
 
+if (file_exists(WDQS_PLUGIN_BASE_DIR . '/lib/external/wpmudev-dash-notification.php')) require_once WDQS_PLUGIN_BASE_DIR . '/lib/external/wpmudev-dash-notification.php';
+
 require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_installer.php';
 Wdqs_Installer::check();
 
 require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_options.php';
+require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_image_downloader.php';
 
 require_once (WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_widget_status.php');
 add_action('widgets_init', create_function('', "register_widget('Wdqs_WidgetStatus');"));

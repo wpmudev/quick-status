@@ -42,6 +42,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$date_checked = isset($instance['date']) && (int)$instance['date'] ? 'checked="checked"' : false;
 		$link_avatars_checked = isset($instance['link_avatars']) && (int)$instance['link_avatars'] ? 'checked="checked"' : false;
 		$external_avatars_link_checked = isset($instance['external_avatars_link']) && (int)$instance['external_avatars_link'] ? 'checked="checked"' : false;
+		$title_after_checked = isset($instance['title_after']) && (int)$instance['title_after'] ? 'checked="checked"' : false;
 		$word_limit = esc_attr($instance['word_limit']);
 
 		// Set defaults
@@ -86,6 +87,10 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$html .= '<br />';
 		$html .= '<input type="checkbox" name="' . $this->get_field_name('external_avatars_link') . '" id="' . $this->get_field_id('external_avatars_link') . '" value="1" ' . $external_avatars_link_checked . '"/>&nbsp;';
 		$html .= '<label for="' . $this->get_field_id('external_avatars_link') . '">' . __('Allow external author links', 'wdqs') . '</label>';
+
+		$html .= '<br />';
+		$html .= '<input type="checkbox" name="' . $this->get_field_name('title_after') . '" id="' . $this->get_field_id('title_after') . '" value="1" ' . $title_after_checked . '"/>&nbsp;';
+		$html .= '<label for="' . $this->get_field_id('title_after') . '">' . __('Post title and link below text', 'wdqs') . '</label>';
 		$html .= '</p>';
 
 		$html .= '<p>';
@@ -117,6 +122,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$instance['external_avatars_link'] = strip_tags($new_instance['external_avatars_link']);
 		$instance['date'] = strip_tags($new_instance['date']);
 		$instance['word_limit'] = strip_tags($new_instance['word_limit']);
+		$instance['title_after'] = strip_tags($new_instance['title_after']);
 
 		return $instance;
 	}
@@ -130,6 +136,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$this->_avatars = esc_attr($instance['avatars']);
 		$this->_link_avatars = esc_attr($instance['link_avatars']);
 		$this->_external_avatars_link = esc_attr($instance['external_avatars_link']);
+		$this->_title_after = esc_attr($instance['title_after']);
 		$this->_date = esc_attr($instance['date']);
 		$this->_word_count_limit = (int)$instance['word_limit'];
 
@@ -173,10 +180,11 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		$posts = $this->_get_status_posts($count, $type);
 		$out = '';
 		foreach ($posts as $post) {
+			$title = '<div class="wdqs_widget_status_title">' . $post->post_title . '</div>';
+			$content = '<div class="wdqs_widget_status_body">' . $this->_prepare_post_list_item_content($post) . '</div>';
 			$item = '<li>' .
 				$this->_get_avatar_markup($post) . 
-				'<div class="wdqs_widget_status_title">' . $post->post_title . '</div>' .
-				'<div class="wdqs_widget_status_body">' . $this->_prepare_post_list_item_content($post) . '</div>' .
+					($this->_title_after ? "{$content}{$title}" : "{$title}{$content}") .
 				$this->_get_post_meta($post) .
 			'</li>';
 			$out .= $item;

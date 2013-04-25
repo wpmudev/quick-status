@@ -101,6 +101,7 @@ class Wdqs_AdminPages {
 		add_settings_section('wdqs_extra', __('Extras', 'wdqs'), create_function('', ''), 'wdqs_options_page');
 		add_settings_field('wdqs_external', __('External links', 'wdqs'), array($form, 'create_externals_box'), 'wdqs_options_page', 'wdqs_extra');
 		add_settings_field('wdqs_html5_video', __('Simple HTML5 video support', 'wdqs'), array($form, 'create_html5_video_box'), 'wdqs_options_page', 'wdqs_extra');
+		add_settings_field('wdqs_download', __('Download external images', 'wdqs'), array($form, 'create_download_box'), 'wdqs_options_page', 'wdqs_extra');
 	}
 
 	function create_admin_menu_entry () {
@@ -147,12 +148,12 @@ class Wdqs_AdminPages {
 	 */
 	function generate_link_preview ($link, $data=false, $is_post=false) {
 		$preview = false;
-
+		$image = $no_image = $height = $width = $link_title = $link_text = false;
 		if (is_array($data)) {
 			extract($data);
-		} else {
+		} /*else {
 			$image = $no_image = $height = $width = false;
-		}
+		}*/
 
 		// Is it a video/oEmbed?
 		if (!class_exists('WP_oEmbed')) require_once(ABSPATH . '/wp-includes/class-oembed.php');
@@ -180,6 +181,7 @@ class Wdqs_AdminPages {
 			$this->_link_type = 'image';
 			$height = $height ? "height='{$height}'" : '';
 			$width = $width ? "width='{$width}'" : '';
+			$link = apply_filters('wdqs-image-img_src', $link);
 			return "<div class='wdqs wdqs_image'><img src='{$link}' {$height} {$width} /></div>";
 		}
 
@@ -187,7 +189,7 @@ class Wdqs_AdminPages {
 		// most likely we're dealing with a link to a page.
 		// Parse it, then.
 		$page = $this->get_page_contents($link);
-		require_once(WDQS_PLUGIN_BASE_DIR . '/lib/external/simple_html_dom.php');
+		if (!class_exists('simple_html_dom_node')) require_once(WDQS_PLUGIN_BASE_DIR . '/lib/external/simple_html_dom.php');
 		$html = str_get_html($page);
 		$str = $html->find('text');
 
@@ -209,6 +211,9 @@ class Wdqs_AdminPages {
 				$image = current($images);
 				$images = false;
 			}
+		}
+		if ($image && $is_post) {
+			$image = apply_filters('wdqs-link-img_src', $image);
 		}
 		if ($no_image) {
 			$images = $image = false;
@@ -327,6 +332,7 @@ class Wdqs_AdminPages {
 	}
 
 	function json_generate_preview () {
+		$_POST = stripslashes_deep($_POST);
 		$data = array(
 			'height' => @$_POST['height'],
 			'width' => @$_POST['width'],

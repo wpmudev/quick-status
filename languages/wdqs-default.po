@@ -2,16 +2,17 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Status\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-16 14:41+0100\n"
-"PO-Revision-Date: 2012-11-16 14:41+0100\n"
+"POT-Creation-Date: 2013-04-25 15:16+0100\n"
+"PO-Revision-Date: 2013-04-25 15:16+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-KeywordsList: __;_e\n"
-"X-Poedit-Basepath: D:\\xampp\\htdocs\\status\\wp-content\\plugins\\status\n"
-"X-Generator: Poedit 1.5.4\n"
+"X-Poedit-Basepath: /Volumes/Trunk/xampp/htdocs/status/wp-content/plugins/"
+"status\n"
+"X-Generator: Poedit 1.5.5\n"
 "X-Poedit-SearchPath-0: lib\n"
 "X-Poedit-SearchPath-1: lib/forms\n"
 
@@ -96,7 +97,7 @@ msgid ""
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:116
-#: lib/class_wdqs_admin_pages.php:280
+#: lib/class_wdqs_admin_pages.php:285
 #, php-format
 msgid "My quick %s post"
 msgstr ""
@@ -208,7 +209,7 @@ msgid "Add <code>rel=\"nofollow\"</code> to the external links?"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:233
-#: lib/class_wdqs_admin_pages.php:390 lib/class_wdqs_public_pages.php:105
+#: lib/class_wdqs_admin_pages.php:396 lib/class_wdqs_public_pages.php:105
 msgid "Not supported"
 msgstr ""
 
@@ -237,6 +238,14 @@ msgstr ""
 #: lib/class_wdqs_admin_form_renderer.php:250
 msgid ""
 "This is a list of recognized formats / file extensions (comma separated)"
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:255
+msgid "Attempt to download external images?"
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:258
+msgid "Attempt to download external images for links?"
 msgstr ""
 
 #: lib/class_wdqs_admin_pages.php:62 lib/class_wdqs_public_pages.php:39
@@ -319,12 +328,16 @@ msgstr ""
 msgid "Simple HTML5 video support"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:123 lib/class_wdqs_admin_pages.php:140
+#: lib/class_wdqs_admin_pages.php:104
+msgid "Download external images"
+msgstr ""
+
+#: lib/class_wdqs_admin_pages.php:124 lib/class_wdqs_admin_pages.php:141
 #: lib/forms/dashboard_widget.php:12
 msgid "Status"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:370
+#: lib/class_wdqs_admin_pages.php:376
 msgid "Settings"
 msgstr ""
 
@@ -332,7 +345,7 @@ msgstr ""
 msgid "Shows Status update form in a widget"
 msgstr ""
 
-#: lib/class_wdqs_widget_posting.php:19 lib/class_wdqs_widget_status.php:51
+#: lib/class_wdqs_widget_posting.php:19 lib/class_wdqs_widget_status.php:52
 msgid "Title:"
 msgstr ""
 
@@ -369,46 +382,68 @@ msgstr ""
 msgid "No limit"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:56
+#: lib/class_wdqs_widget_status.php:57
 msgid "Show this many posts:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:65
+#: lib/class_wdqs_widget_status.php:66
 msgid "Auto-update rate <small>(seconds)</small>:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:67
+#: lib/class_wdqs_widget_status.php:68
 msgid "Never auto-update"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:75
+#: lib/class_wdqs_widget_status.php:76
 msgid "Show avatars:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:84
+#: lib/class_wdqs_widget_status.php:85
 msgid "Link author avatars to their author/profile pages"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:88
+#: lib/class_wdqs_widget_status.php:89
 msgid "Allow external author links"
 msgstr ""
 
 #: lib/class_wdqs_widget_status.php:93
+msgid "Post title and link below text"
+msgstr ""
+
+#: lib/class_wdqs_widget_status.php:98
 msgid "Show date"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:97
+#: lib/class_wdqs_widget_status.php:102
 msgid "Limit my excerpts to this many words:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:103
+#: lib/class_wdqs_widget_status.php:108
 msgid ""
 "Only excerpts estimated to be longer then the selected value will be "
 "processed."
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:104
+#: lib/class_wdqs_widget_status.php:109
 msgid "Please, note that the processed excerpts wil lose any HTML formatting."
+msgstr ""
+
+#: lib/external/wpmudev-dash-notification.php:57
+#, php-format
+msgid ""
+"Easily get updates, support, and one-click WPMU DEV plugin/theme "
+"installations right from in your dashboard - <strong><a href=\"%s\" title="
+"\"Install Now &raquo;\">install the free WPMU DEV Dashboard plugin</a></"
+"strong>. &nbsp;&nbsp;&nbsp;<small><a href=\"http://premium.wpmudev.org/wpmu-"
+"dev/update-notifications-plugin-information/\">(find out more)</a></small>"
+msgstr ""
+
+#: lib/external/wpmudev-dash-notification.php:61
+#, php-format
+msgid ""
+"Updates, Support, Premium Plugins, Community - <strong><a href=\"%s\" title="
+"\"Activate Now &raquo;\">activate the WPMU DEV Dashboard plugin now</a></"
+"strong>."
 msgstr ""
 
 #: lib/forms/dashboard_widget.php:4
