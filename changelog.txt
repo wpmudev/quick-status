@@ -5,6 +5,13 @@ Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
 
+1.8 - 2014-04-25
+----------------------------------------------------------------------
+- Fixed for widget instances.
+- Added image downloading options.
+- Added media import options.
+- Added automatic featured image assigning options.
+
 1.7 - 2013-04-25
 ----------------------------------------------------------------------
 - Fix for preview generation.

@@ -2,8 +2,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Status\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-04-25 15:16+0100\n"
-"PO-Revision-Date: 2013-04-25 15:16+0100\n"
+"POT-Creation-Date: 2014-04-25 15:33+0100\n"
+"PO-Revision-Date: 2014-04-25 15:33+0100\n"
 "Last-Translator: \n"
 "Language-Team: Incsub\n"
 "MIME-Version: 1.0\n"
@@ -209,7 +209,7 @@ msgid "Add <code>rel=\"nofollow\"</code> to the external links?"
 msgstr ""
 
 #: lib/class_wdqs_admin_form_renderer.php:233
-#: lib/class_wdqs_admin_pages.php:396 lib/class_wdqs_public_pages.php:105
+#: lib/class_wdqs_admin_pages.php:420 lib/class_wdqs_public_pages.php:105
 msgid "Not supported"
 msgstr ""
 
@@ -244,8 +244,45 @@ msgstr ""
 msgid "Attempt to download external images?"
 msgstr ""
 
-#: lib/class_wdqs_admin_form_renderer.php:258
+#: lib/class_wdqs_admin_form_renderer.php:257
+msgid ""
+"Enabling this option will download the the external images for your &quot;"
+"Image&quot; type updates and use them as local."
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:259
 msgid "Attempt to download external images for links?"
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:261
+msgid ""
+"Enabling this option will download the the external images for your &quot;"
+"Link&quot; type updates and use them as local."
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:263
+msgid "Import downloaded images into Media Library?"
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:265
+#, php-format
+msgid ""
+"Enabling this option will import your auto-downloaded images into your <a "
+"href=\"%s\">Media Library</a>."
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:267
+msgid "Set first imported image as featured image?"
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:269
+msgid ""
+"Enabling this option will use the first of your media-imported images as a "
+"featured image for your status update."
+msgstr ""
+
+#: lib/class_wdqs_admin_form_renderer.php:270
+msgid "<b>Note:</b> Media Library import needs to be enabled too."
 msgstr ""
 
 #: lib/class_wdqs_admin_pages.php:62 lib/class_wdqs_public_pages.php:39
@@ -337,7 +374,7 @@ msgstr ""
 msgid "Status"
 msgstr ""
 
-#: lib/class_wdqs_admin_pages.php:376
+#: lib/class_wdqs_admin_pages.php:400
 msgid "Settings"
 msgstr ""
 
@@ -345,7 +382,7 @@ msgstr ""
 msgid "Shows Status update form in a widget"
 msgstr ""
 
-#: lib/class_wdqs_widget_posting.php:19 lib/class_wdqs_widget_status.php:52
+#: lib/class_wdqs_widget_posting.php:19 lib/class_wdqs_widget_status.php:63
 msgid "Title:"
 msgstr ""
 
@@ -382,68 +419,50 @@ msgstr ""
 msgid "No limit"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:57
+#: lib/class_wdqs_widget_status.php:68
 msgid "Show this many posts:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:66
+#: lib/class_wdqs_widget_status.php:77
 msgid "Auto-update rate <small>(seconds)</small>:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:68
+#: lib/class_wdqs_widget_status.php:79
 msgid "Never auto-update"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:76
+#: lib/class_wdqs_widget_status.php:87
 msgid "Show avatars:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:85
+#: lib/class_wdqs_widget_status.php:96
 msgid "Link author avatars to their author/profile pages"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:89
+#: lib/class_wdqs_widget_status.php:100
 msgid "Allow external author links"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:93
+#: lib/class_wdqs_widget_status.php:104
 msgid "Post title and link below text"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:98
+#: lib/class_wdqs_widget_status.php:109
 msgid "Show date"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:102
+#: lib/class_wdqs_widget_status.php:113
 msgid "Limit my excerpts to this many words:"
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:108
+#: lib/class_wdqs_widget_status.php:119
 msgid ""
 "Only excerpts estimated to be longer then the selected value will be "
 "processed."
 msgstr ""
 
-#: lib/class_wdqs_widget_status.php:109
+#: lib/class_wdqs_widget_status.php:120
 msgid "Please, note that the processed excerpts wil lose any HTML formatting."
-msgstr ""
-
-#: lib/external/wpmudev-dash-notification.php:57
-#, php-format
-msgid ""
-"Easily get updates, support, and one-click WPMU DEV plugin/theme "
-"installations right from in your dashboard - <strong><a href=\"%s\" title="
-"\"Install Now &raquo;\">install the free WPMU DEV Dashboard plugin</a></"
-"strong>. &nbsp;&nbsp;&nbsp;<small><a href=\"http://premium.wpmudev.org/wpmu-"
-"dev/update-notifications-plugin-information/\">(find out more)</a></small>"
-msgstr ""
-
-#: lib/external/wpmudev-dash-notification.php:61
-#, php-format
-msgid ""
-"Updates, Support, Premium Plugins, Community - <strong><a href=\"%s\" title="
-"\"Activate Now &raquo;\">activate the WPMU DEV Dashboard plugin now</a></"
-"strong>."
 msgstr ""
 
 #: lib/forms/dashboard_widget.php:4

@@ -3,7 +3,7 @@
 Plugin Name: Status
 Plugin URI: http://premium.wpmudev.org/
 Description: Quickly post your status
-Version: 1.7
+Version: 1.8
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org
 WDP ID: 242
@@ -56,6 +56,7 @@ $textdomain_handler('wdqs', false, WDQS_PLUGIN_SELF_DIRNAME . '/languages/');
  */
 function wdqs_kill_wpautop_on_ql_posts ($content) {
 	if (preg_match('/class=[\'"]wdqs\b/', $content)) remove_filter('the_content', 'wpautop');
+	else if (!has_filter('the_content', 'wpautop')) add_filter('the_content', 'wpautop');
 	return $content;
 }
 
@@ -92,7 +93,6 @@ function wdqs_wp_user_capability_check ($all, $requested, $args=array()) {
 }
 add_filter('user_has_cap', 'wdqs_wp_user_capability_check', 10, 3);
 
-if (file_exists(WDQS_PLUGIN_BASE_DIR . '/lib/external/wpmudev-dash-notification.php')) require_once WDQS_PLUGIN_BASE_DIR . '/lib/external/wpmudev-dash-notification.php';
 
 require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_installer.php';
 Wdqs_Installer::check();
@@ -107,9 +107,19 @@ if (is_admin()) {
 	require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_admin_form_renderer.php';
 	require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_admin_pages.php';
 	Wdqs_AdminPages::serve();
+	if (file_exists(WDQS_PLUGIN_BASE_DIR . '/lib/external/wpmudev-dash-notification.php')) {
+		global $wpmudev_notices;
+		if (!is_array($wpmudev_notices)) $wpmudev_notices = array();
+		$wpmudev_notices[] = array(
+			'id' => 242,
+			'name' => 'Status',
+			'screens' => array(
+				'settings_page_wdqs',
+			),
+		);
+		require_once WDQS_PLUGIN_BASE_DIR . '/lib/external/wpmudev-dash-notification.php';
+	}
 } else {
-	//require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_public_pages.php';
-	//Wdqs_PublicPages::serve();
 	add_filter('the_content', 'wdqs_kill_wpautop_on_ql_posts', 1);
 	require_once WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_public_pages.php';
 	Wdqs_PublicPages::serve();

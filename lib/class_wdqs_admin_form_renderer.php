@@ -252,12 +252,23 @@ class Wdqs_AdminFormRenderer {
 	}
 	
 	function create_download_box () {
-		echo '<label for="">' . __('Attempt to download external images?', 'wdqs') . '</label> ' .
+		echo '<p><label for="">' . __('Attempt to download external images?', 'wdqs') . '</label> ' .
 			$this->_create_checkbox('download_images-images') .
-		'<br />';
-		echo '<label for="">' . __('Attempt to download external images for links?', 'wdqs') . '</label> ' .
+			'<br /><small>' . __('Enabling this option will download the the external images for your &quot;Image&quot; type updates and use them as local.', 'wdqs') . '</small>' .
+		'</p>';
+		echo '<p><label for="">' . __('Attempt to download external images for links?', 'wdqs') . '</label> ' .
 			$this->_create_checkbox('download_images-links') .
-		'<br />';
+			'<br /><small>' . __('Enabling this option will download the the external images for your &quot;Link&quot; type updates and use them as local.', 'wdqs') . '</small>' .
+		'</p>';
+		echo '<p><label for="">' . __('Import downloaded images into Media Library?', 'wdqs') . '</label> ' .
+			$this->_create_checkbox('download_images-to_media_library') .
+			'<br /><small>' . sprintf(__('Enabling this option will import your auto-downloaded images into your <a href="%s">Media Library</a>.', 'wdqs'), admin_url('upload.php')) . '</small>' .
+		'</p>';
+		echo '<p><label for="">' . __('Set first imported image as featured image?', 'wdqs') . '</label> ' .
+			$this->_create_checkbox('download_images-featured_image') .
+			'<br /><small>' . __('Enabling this option will use the first of your media-imported images as a featured image for your status update.', 'wdqs') . '</small>' .
+			'<br /><small>' . __('<b>Note:</b> Media Library import needs to be enabled too.', 'wdqs') . '</small>' .
+		'</p>';
 	}
 
 }

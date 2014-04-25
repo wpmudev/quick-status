@@ -105,10 +105,12 @@ class Wdqs_AdminPages {
 	}
 
 	function create_admin_menu_entry () {
-		if (@$_POST && isset($_POST['option_page'])) {
+		$perms = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'manage_network_options' : 'manage_options';
+		$page = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'settings.php' : 'options-general.php';
+		if (!empty($_POST) && isset($_POST['option_page']) && current_user_can($perms)) {
 			$changed = false;
 			$update = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'update_site_option' : 'update_option';
-			if('wdqs' == @$_POST['option_page']) {
+			if(!empty($_POST['option_page']) && 'wdqs' == $_POST['option_page']) {
 				$update('wdqs', stripslashes_deep($_POST['wdqs']));
 				$changed = true;
 			}
@@ -119,8 +121,6 @@ class Wdqs_AdminPages {
 				die;
 			}
 		}
-		$perms = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'manage_network_options' : 'manage_options';
-		$page = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'settings.php' : 'options-general.php';
 		add_submenu_page($page, __('Status', 'wdqs'), __('Status', 'wdqs'), $perms, 'wdqs', array($this, 'create_admin_page'));
 	}
 
@@ -287,7 +287,6 @@ class Wdqs_AdminPages {
 	}
 
 	function create_post ($data) {
-		//if (!current_user_can('publish_posts')) return false;
 		if (!$this->_check_permissions()) return false;
 		global $user_ID;
 		$send = array(
@@ -312,6 +311,7 @@ class Wdqs_AdminPages {
 
 		$format = $this->data->get('post_format-' . $this->_link_type);
 
+
 		$post_id = wp_insert_post($post);
 
 		if ($post_id) {
@@ -319,6 +319,30 @@ class Wdqs_AdminPages {
 			update_post_meta($post_id, 'wdqs_type', $this->_link_type);
 			update_post_meta($post_id, 'wdqs_posted', time());
 			$post = get_post($post_id);
+
+			// Alright, now let's check if we're equipped to set the image as featured
+			if ($this->data->get('download_images-to_media_library') && $this->data->get('download_images-featured_image') && class_exists('Wdqs_ImageDownloader')) {
+				$image = apply_filters('wdqs-link-img_src', $data['thumbnail']);
+				if (!empty($image) && Wdqs_ImageDownloader::is_local_image($image)) {
+					$query = new WP_Query(array(
+						'post_type' => 'attachment',
+						'post_status' => 'any',
+						'meta_query' => array(array(
+							'key' => '_wp_attached_file',
+							'value' => basename($image),
+							'compare' => 'LIKE'
+						)),
+					));
+					$attachment = !empty($query->posts[0]) ? $query->posts[0] : false;
+					$featured_image_id = false;
+					if ($attachment && !empty($attachment->ID)) {
+						$url = get_post_meta($attachment->ID, '_wp_attached_file', true);
+						if (preg_match('/' . preg_quote(basename($image), '/') . '$/i', $url)) $featured_image_id = $attachment->ID;
+					}
+					// Okay, so we're good to go
+					if ($featured_image_id) set_post_thumbnail($post_id, $featured_image_id);
+				}
+			}
 
 			// Prepare old post for UFb triggering
 			// Walkaround for 1.3 UFb fix

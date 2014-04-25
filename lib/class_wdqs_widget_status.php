@@ -35,6 +35,17 @@ class Wdqs_WidgetStatus extends WP_Widget {
 	}
 
 	function form ($instance) {
+		$instance = wp_parse_args($instance, array(
+			'title' => '',
+			'count' => '',
+			'autorefresh' => '',
+			'avatars' => '',
+			'date' => '',
+			'link_avatars' => '',
+			'external_avatars_link' => '',
+			'title_after' => '',
+			'word_limit' => '',
+		));
 		$title = esc_attr($instance['title']);
 		$count = esc_attr($instance['count']);
 		$autorefresh = esc_attr($instance['autorefresh']);
@@ -128,6 +139,17 @@ class Wdqs_WidgetStatus extends WP_Widget {
 	}
 
 	function widget ($args, $instance) {
+		$instance = wp_parse_args($instance, array(
+			'title' => '',
+			'count' => '',
+			'autorefresh' => '',
+			'avatars' => '',
+			'date' => '',
+			'link_avatars' => '',
+			'external_avatars_link' => '',
+			'title_after' => '',
+			'word_limit' => '',
+		));
 		extract($args);
 		$title = apply_filters('widget_title', $instance['title']);
 		$count = (int)$instance['count'];
@@ -151,6 +173,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 			$rate = (int)($autorefresh * 1000);
 			echo "<input type='hidden' class='wdqs_widget_count' value='{$count}' />";
 			echo "<input type='hidden' class='wdqs_widget_autorefresh' value='{$rate}' />";
+			echo "<input type='hidden' class='wdqs_widget_instance_id' value='{$this->number}' />";
 		}
 		if (!defined('WDQS_WIDGET_STATUS_JAVASCRIPT_INCLUDED')) {
 			$this->inject_script_dependencies();
@@ -169,6 +192,30 @@ class Wdqs_WidgetStatus extends WP_Widget {
 
 	function json_wdqs_list_posts () {
 		$count = (int)$_POST['count'];
+		$instance_id = !empty($_POST['instance_id']) && (int)$_POST['instance_id'] 
+			? (int)$_POST['instance_id'] 
+			: $this->number
+		;
+		$all_data = $this->get_settings();
+		$instance = !empty($all_data[$instance_id]) ? $all_data[$instance_id] : array();
+		$instance = wp_parse_args($instance, array(
+			'title' => '',
+			'count' => '',
+			'autorefresh' => '',
+			'avatars' => '',
+			'date' => '',
+			'link_avatars' => '',
+			'external_avatars_link' => '',
+			'title_after' => '',
+			'word_limit' => '',
+		));
+		$this->_avatars = esc_attr($instance['avatars']);
+		$this->_link_avatars = esc_attr($instance['link_avatars']);
+		$this->_external_avatars_link = esc_attr($instance['external_avatars_link']);
+		$this->_title_after = esc_attr($instance['title_after']);
+		$this->_date = esc_attr($instance['date']);
+		$this->_word_count_limit = (int)$instance['word_limit'];
+
 		header('Content-type: application/json');
 		echo json_encode(array(
 			'markup' => $this->_prepare_post_list_items($count),
@@ -184,7 +231,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 			$content = '<div class="wdqs_widget_status_body">' . $this->_prepare_post_list_item_content($post) . '</div>';
 			$item = '<li>' .
 				$this->_get_avatar_markup($post) . 
-					($this->_title_after ? "{$content}{$title}" : "{$title}{$content}") .
+					(!empty($this->_title_after) ? "{$content}{$title}" : "{$title}{$content}") .
 				$this->_get_post_meta($post) .
 			'</li>';
 			$out .= $item;
@@ -194,11 +241,14 @@ class Wdqs_WidgetStatus extends WP_Widget {
 
 	private function _prepare_post_list_item_content ($post) {
 		$out = $post->post_content;
-		$count = (int)$this->_word_count_limit;
-		if ($this->_word_count_limit) {
+		$count = !empty($this->_word_count_limit) && (int)$this->_word_count_limit
+			? (int)$this->_word_count_limit
+			: 0
+		;
+		if ($count) {
 			$approx_word_count = count(preg_split('/\s/um', wp_strip_all_tags($out), -1, PREG_SPLIT_NO_EMPTY));
-			$out = $approx_word_count >= $this->_word_count_limit
-				? wp_trim_words($out, $this->_word_count_limit)
+			$out = $approx_word_count >= $count
+				? wp_trim_words($out, $count)
 				: $out
 			;
 		}
@@ -206,7 +256,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 	}
 
 	private function _get_avatar_markup ($post) {
-		if (!$this->_avatars) return false;
+		if (empty($this->_avatars)) return false;
 		$key = $this->_avatars;
 		$map = apply_filters('wdqs-widget-avatars_size_map', $this->_avatar_size_map);
 		$size = in_array($key, array_keys($map)) ? $map[$key] : apply_filters('wdqs-widget-default_size_mapping', false);
@@ -236,7 +286,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 	}
 
 	private function _get_post_meta ($post) {
-		if ($this->_date) {
+		if (!empty($this->_date)) {
 			$date_format = apply_filters('wdqs-widget-post_meta-date_format',
 				(defined('WDQS_WIDGET_DATE_FORMAT') && WDQS_WIDGET_DATE_FORMAT
 					? WDQS_WIDGET_DATE_FORMAT
@@ -246,7 +296,7 @@ class Wdqs_WidgetStatus extends WP_Widget {
 		}
 
 		return '<div class="wdqs-post_meta">' . 
-			apply_filters('wdqs-post_meta', '<div class="wdqs-post_meta-date">' . $date . '</div>', $post) .
+			apply_filters('wdqs-post_meta', (!empty($date) ? '<div class="wdqs-post_meta-date">' . $date . '</div>' : ''), $post) .
 		'</div>';
 	}
 

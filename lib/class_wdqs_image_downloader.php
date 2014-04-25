@@ -2,6 +2,8 @@
 
 class Wdqs_ImageDownloader {
 
+	const IMPORTED_META_KEY = 'wdqs_imported_from';
+
 	private $_data;
 
 	private function __construct () {
@@ -23,7 +25,14 @@ class Wdqs_ImageDownloader {
 	}
 
 	public function download_image ($src) {
-		if ($this->is_local_image($src)) return $src; // Local image
+		if (apply_filters('wdqs-image-skip_download-for', false, $src)) return $src;
+
+		if (self::is_local_image($src)) return $src; // Local image
+
+		if ($this->_data->get('download_images-to_media_library')) {
+			$locally_imported = self::is_media_imported_image($src);
+			if (!empty($locally_imported)) return $locally_imported;
+		}
 
 		// Download the image and write to temp file
 		$image = wp_remote_get($src, array(
@@ -86,11 +95,35 @@ class Wdqs_ImageDownloader {
 
 		@unlink($tmp_img_file);
 
+		if ($this->_data->get('download_images-to_media_library')) {
+			$image_info['original_url'] = $src;
+			$this->_import_to_media_library($image_info);
+		}
+
 		return $image_info['url'];
 	}
 
-	public function is_local_image ($src) {
+	/**
+	 * Prevents download loop.
+	 */
+	public static function is_local_image ($src) {
 		return preg_match('/^' . preg_quote(site_url(), '/') . '/i', $src);
+	}
+
+	/**
+	 * Prevents re-downloading already imported images.
+	 */
+	public static function is_media_imported_image ($src) {
+		$query = new WP_Query(array(
+			'post_type' => 'attachment',
+			'post_status' => 'any',
+			'meta_key' => self::IMPORTED_META_KEY,
+			'meta_value' => $src,
+		));
+		return !empty($query->posts) && !empty($query->posts[0]->ID)
+			? wp_get_attachment_url($query->posts[0]->ID)
+			: false
+		;
 	}
 
 	public function get_supported_image_types () {
@@ -118,7 +151,31 @@ class Wdqs_ImageDownloader {
 		return array(
 			'path' => $fullpath,
 			'url' => "{$url}{$filename}.{$extension}",
+			'extension' => $extension,
 		);
+	}
+
+	private function _import_to_media_library ($info) {
+		$filepath = !empty($info['path']) ? $info['path'] : false;
+		if (empty($filepath)) return false;
+		
+		$guid = !empty($info['url']) ? $info['url'] : false;
+		$filename = basename($filepath);
+		if (empty($guid) || empty($filename)) return false;
+
+		$wp_filetype = wp_check_filetype($filename, null);
+
+		$attachment = array(
+			'guid' => $guid, 
+			'post_mime_type' => $wp_filetype['type'],
+			'post_title' => preg_replace('/\.[^.]+$/', '', $filename),
+			'post_content' => '',
+			'post_status' => 'inherit'
+		);
+		$attach_id = wp_insert_attachment($attachment, $filepath);
+		$attach_data = wp_generate_attachment_metadata($attach_id, $filepath);
+		wp_update_attachment_metadata($attach_id, $attach_data);
+		add_post_meta($attach_id, self::IMPORTED_META_KEY, $info['original_url'], true);
 	}
 
 }
