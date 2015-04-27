@@ -116,7 +116,7 @@ class Wdqs_AdminPages {
 			}
 
 			if ($changed) {
-				$goback = add_query_arg('settings-updated', 'true',  wp_get_referer());
+				$goback = esc_url_raw(add_query_arg('settings-updated', 'true',  wp_get_referer()));
 				wp_redirect($goback);
 				die;
 			}
