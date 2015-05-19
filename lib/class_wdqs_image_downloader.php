@@ -65,7 +65,7 @@ class Wdqs_ImageDownloader {
 				break;
 			case IMAGETYPE_PNG:
 				$extension = 'png';
-				$create_proc = 'imagecreatefromgpng';
+				$create_proc = 'imagecreatefrompng';
 				$write_proc = 'imagepng';
 				break;
 			case IMAGETYPE_JPEG:
