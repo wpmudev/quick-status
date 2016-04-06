@@ -21,7 +21,7 @@ class Wdqs_WidgetPosting extends WP_Widget {
 		$html .= '</p>';
 
 		$data = new Wdqs_Options;
-		if ('manual' != $data->get('placement')) {
+		if ('widget' != $data->get('placement')) {
 			$html .= '<div class="error below-h2"><p>' . __('Please, switch your placement settings to <em>manual</em> in plugin settings', 'wdqs') . '</p></div>';
 		}
 
