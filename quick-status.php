@@ -3,7 +3,7 @@
 Plugin Name: Status
 Plugin URI: http://premium.wpmudev.org/
 Description: Quickly post your status
-Version: 1.8.2
+Version: 1.8.3
 Author: WPMU DEV
 Author URI: http://premium.wpmudev.org
 WDP ID: 242
