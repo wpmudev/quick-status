@@ -18,7 +18,7 @@ class Wdqs_PublicPages {
 	 *
 	 * @static
 	 */
-	function serve () {
+	static function serve () {
 		$me = new Wdqs_PublicPages;
 		if ('widget' == $me->data->get('placement')) {
 			require_once (WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_widget_posting.php');

@@ -19,7 +19,7 @@ class Wdqs_AdminPages {
 	 *
 	 * @static
 	 */
-	function serve () {
+	static function serve () {
 		$me = new Wdqs_AdminPages;
 		if ('widget' == $me->data->get('placement')) {
 			require_once (WDQS_PLUGIN_BASE_DIR . '/lib/class_wdqs_widget_posting.php');
