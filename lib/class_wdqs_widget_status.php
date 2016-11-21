@@ -14,9 +14,9 @@ class Wdqs_WidgetStatus extends WP_Widget {
 
 	private $_word_limits = array();
 
-	function Wdqs_WidgetStatus () {
+	function __construct () {
 		$widget_ops = array('classname' => __CLASS__, 'description' => __('Shows one or more last Status posts', 'wdqs'));
-		parent::WP_Widget(__CLASS__, 'Status', $widget_ops);
+		parent::__construct(__CLASS__, 'Status', $widget_ops);
 
 		add_action('wp_ajax_wdqs_list_posts', array($this, 'json_wdqs_list_posts'));
 		add_action('wp_ajax_nopriv_wdqs_list_posts', array($this, 'json_wdqs_list_posts'));
