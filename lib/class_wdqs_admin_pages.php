@@ -80,6 +80,7 @@ class Wdqs_AdminPages {
 		if (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) return false;
 		wp_enqueue_style('wdqs', WDQS_PLUGIN_URL . '/css/wdqs.css');
 		wp_enqueue_style('thickbox');
+		wp_enqueue_media();
 		wp_enqueue_style('wdqs_widget', WDQS_PLUGIN_URL . '/css/widget.css');
 	}
 
@@ -107,6 +108,7 @@ class Wdqs_AdminPages {
 	function create_admin_menu_entry () {
 		$perms = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'manage_network_options' : 'manage_options';
 		$page = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'settings.php' : 'options-general.php';
+
 		if (!empty($_POST) && isset($_POST['option_page']) && current_user_can($perms)) {
 			$changed = false;
 			$update = (defined('WP_NETWORK_ADMIN') && WP_NETWORK_ADMIN) ? 'update_site_option' : 'update_option';
