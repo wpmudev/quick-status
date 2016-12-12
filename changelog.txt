@@ -4,6 +4,9 @@ Author: Ve Bailovity (Incsub)
 Change Log:
 ----------------------------------------------------------------------
 ----------------------------------------------------------------------
+1.8.4 - 2016-12-12
+- Fixed: Video preview doesn't show properly
+
 1.8.3 - 2016-04-06
 - Fixed status update widget, which was disappearing when placement was manual.
 
