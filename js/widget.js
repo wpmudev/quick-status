@@ -10,7 +10,8 @@
         function publishPostData(e) {
             e.preventDefault();
             e.stopPropagation();
-            var text = $("#wdqs-status").val();
+            var text = $("#wdqs-status").val(),
+                type = $("#wdqs-link-type").val();
             if (!text.length) return false;
 
             var title = ($("#wdqs-post-title").length ? $("#wdqs-post-title").val() : ''),
@@ -38,7 +39,8 @@
                 "thumbnail": thumbnail,
                 "no_thumbnail": no_thumbnail,
                 "link_title": link_title,
-                "link_text": link_text
+                "link_text": link_text,
+                "type" : type
             }, function (data) {
                 if (_isPublicPage) { // Refresh if it's a public page
                     window.location.reload(true);
@@ -347,6 +349,7 @@
 
             $("#wdqs-status").val('').focus();
             $("#wdqs-preview-root").empty();
+            $("#wdqs-link-type").val( $a.attr('id') );
 
             switch ($a.attr('id')) {
                 case "wdqs-video-switch":

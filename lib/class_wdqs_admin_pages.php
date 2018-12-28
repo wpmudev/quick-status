@@ -169,6 +169,16 @@ class Wdqs_AdminPages {
 		}
 		if ($preview) {
 			$this->_link_type = 'video';
+
+			// When saving post, some user roles may not have the `unfiltered_html`
+			// capability, so we're inserting the video url only. 
+			// WordPress will handle the embeding.
+
+			if ( isset( $data['type'] ) && 'video' === $data['type'] ){
+				return $link;
+			}
+
+			// When in preview, we still need it to display the iframe
 			return "<div class='wdqs wdqs_embed'>{$preview}</div>";
 		}
 
@@ -298,6 +308,7 @@ class Wdqs_AdminPages {
 			'width' => (int)$data['width'],
 			'link_title' => @$data['link_title'],
 			'link_text' => @$data['link_text'],
+			'type' => isset( $data['type'] ) ? $data['type'] : ''
 		);
 		$text = $this->generate_preview_html($data['data'], $send, true);
 		$title = @$data['title'] ? $data['title'] : $this->_get_default_title();
